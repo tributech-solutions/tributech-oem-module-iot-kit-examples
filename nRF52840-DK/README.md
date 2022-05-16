@@ -20,11 +20,16 @@ To be able to use the Tributech OEM shield sample the user needs to assure that 
 With the following steps the user is able to assemble and start the sample kit. All Development Kits are supplied by Tributech with preprogrammed configurations and for the initial setup no software changes should be needed.
 
 1. Connect your OEM shield with the nRF52840 DK
+![Connect your OEM shield with the nRF52840-DK](images/nRF52840dk_OEM.png)
 2. Put the SIM card into the OEM shield
+![Connect your OEM shield with the nRF52840-DK](images/nRF52840dk_OEM_SIM.png)
 3. Connect the antenna with the OEM shield
 4. Stack the My-IoT-Adapter on top of the OEM shield
+![Stack the My-IoT-Adapter on top of the OEM shield](images/nRF52840dk_adapter.png)
 5. Connect the S2GO-Pressure-DPS368 sensor with the My-IoT-Adapter
-6. Supply power to the nRF52840 DK via the micro USB connector
+![Connect the S2GO-Pressure-DPS368 sensor with the My-IoT-Adapter](images/adapter_dps368.png)
+6. Supply power to the nRF52840 DK via the micro USB power connector
+![Supply power to the nRF52840 DK via the micro USB power connector](images/nRF52840_power_usb.png)
 7. switch on the nRF52840 DK with it's power switch on the left lower side of the board
 
 When all steps are completed the green LED of the Tributech OEM shield will blink when the initialization of the board has been completed successfully. 
