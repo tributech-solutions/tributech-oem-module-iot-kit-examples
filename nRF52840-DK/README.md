@@ -29,7 +29,7 @@ With the following steps the user is able to assemble and start the sample kit. 
 5. Connect the S2GO-Pressure-DPS368 sensor with the My-IoT-Adapter
 ![Connect the S2GO-Pressure-DPS368 sensor with the My-IoT-Adapter](images/adapter_dps368.png)
 6. Supply power to the nRF52840 DK via the micro USB power connector
-![Supply power to the nRF52840 DK via the micro USB power connector](images/nRF52840_power_usb.png)
+![Supply power to the nRF52840 DK via the micro USB power connector](images/nRF52840_power_usb_2.png)
 7. switch on the nRF52840 DK with it's power switch on the left lower side of the board
 
 When all steps are completed the green LED of the Tributech OEM shield will blink when the initialization of the board has been completed successfully. 
@@ -45,15 +45,19 @@ The address always follows the following format:
 
     node-name.dataspace-node.com
 
-The "node-name" is dependent on the node which is linked to the device.
-The main page of the DSA shows multiple sections all with their own information, but for the verification the user needs to look at the left-hand side an click on the "Agents" tap. This tap lists all agents which are linked to the node. They are listed with the following information:
+The "node-name" is dependent on the node which is linked to the device. The node-name as well as the login credentials will be provided by Tributech via email.
+The main page of the DSA shows multiple sections all with their own information, but for the verification the user needs to look at the left-hand side an click on the "Agents" tap.
+
+![List of all Agents linked to node](images/AgentManagementTap.png)
+
+This tap lists all agents which are linked to the node. They are listed with the following information:
 
 | Name | Type | Status | Key Storage Type | Proofkind |
 |------|------|--------|------------------|-----------|
 
 Name depicts the different names of the agents. Type lists the device type of the respective agents. Status shows if the agents is online or offline. Key Storage Type will show the user where the private keys are stored and ProofKind depicts which key format is used for the proof signatures.
 
-Here the user has to select their own device and click on it. This will lead the user to the "Agent Management" page. An example of the agent management page is shown in the following picture:
+Here the user has to select their own device and click on it. The names of the device will be provided by Tributech via email and will be depicted either on the device box or on the device itself. This will lead the user to the "Agent Management" page. An example of the agent management page is shown in the following picture:
 
 ![Agent management page: agent: Tributech OEM node:dev-node-a](images/DSAAgent.png)
 
@@ -62,8 +66,7 @@ This action will show the stream information and it's associated values link in 
 
 ![Temperature stream of an agent](images/DSAAgentStream.png)
 
-The stream values will be depicted in a graph or table format below the stream information, the value type is automatically chosen depending on the stream definitions. The values send by a active sample kit should 
-
+The stream values will be depicted in a graph or table format below the stream information.
 ## Get started with your project
 
 ### Setup Dev Environment
@@ -83,7 +86,7 @@ The needed software and toolchain parts can be downloaded in one package.
 
 ### Configure OEM Module
 
-The Tributech OEM shield only acknowledges values provided via UART which have a valid ValueMetadataId. These ValueMetadataIds are generated automatically when a new stream is added to the Twin configuration of the OEM shield. Thus the user has to configure the OEm shield via the Data-Space-Admin.
+The Tributech OEM shield only acknowledges values provided via UART which have a valid ValueMetadataId. These ValueMetadataIds are generated automatically when a new stream is added to the Twin configuration of the OEM shield. The Twin configuration is a electronic representation of a IoT-device, it contains the configuration parameters like metadata, configurations and conditions of the device and their different correlations to each other. Parts of this Twin configuration can be altered by the user like adding sources and streams to the configuration. Thus the user has to configure the OEM shield via the Data-Space-Admin. For more in depth information on device twins follow this link Twin ["Understand and use device twins in IoT Hub"](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins).
 
 The configuration is sent to the OEM shield via a MQTT connection which means the device has to be online for a configuration update. If the device is online a new tap can be seen in the Agent management page called "Configuration". This is depicted in the picture below:
 
@@ -104,7 +107,7 @@ After the source is added the name of the source can be changed on the right-han
 
 ![Add stream to source](images/DSAAgentAddStream.png)
 
-The last change which needs to be done is the addition of the "Value change options". Adding these options is shown in the following picture.
+The last change which needs to be done is the addition of the "Value change options". Adding these options is shown in the following picture. The "value change options" consist of three values: PMIN, PMAX, ST. The PMIN value depicts the time frame which has to pass until a new value can be provided to the OEM in seconds. This value has to be at least 10 seconds. **The PMAX and ST values are at the moment not supported by the OEM modules, but will be added in a future update.** The preloaded software in the nRF52840-DK boards will commit a pressure and temperature value each 60 seconds if a connection is available and the sample kit is assembled in the right manner.
 
 ![Add value change options to a stream](images/DSAAgentAddValueChange.png)
 
@@ -124,7 +127,7 @@ Explanation:
 - The `Operation` depicts the command which should be conducted by the OEM shield. 
 - The `ValueMetadataId` links the send timestamp and values to the respective stream. 
 - The `Timestamp` object can be filled with a timestamp in microseconds. If filled with a microseconds value the time is added to the starting date of 1.1.1970. If the timestamp is left at zero the OEM shield attaches the latest timestamp when the value is received.
-- The last object is `Value`, this object holds the value which will be depicted in the DSA. The value linked to the ValueMetadatId has to be encoded Base64. Here the user has to be careful since the value ahs to be encoded accordingly. The Base64 value for 16.5 is "AACEQQ==" if it's encoded as float. If the value is treated as a string the encoded value will be "MTYuNQ==". The value should be encoded according to the configuration of the stream. If the value gets submitted in the wrong format this will lead to unexpected behaviour in the DSA, because it will be depicted in the wrong format.
+- The last object is `Value`, this object holds the value which will be depicted in the DSA. The value linked to the ValueMetadataId has to be encoded Base64. Here the user has to be careful since the value ahs to be encoded accordingly. The Base64 value for 16.5 is "AACEQQ==" if it's encoded as float. If the value is treated as a string the encoded value will be "MTYuNQ==". The value should be encoded according to the configuration of the stream. If the value gets submitted in the wrong format this will lead to unexpected behavior in the DSA, because it will be depicted in the wrong format.
 
 ### Consume data via explorer or API
 
