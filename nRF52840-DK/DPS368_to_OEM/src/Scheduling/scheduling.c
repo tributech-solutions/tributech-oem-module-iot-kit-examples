@@ -42,25 +42,27 @@ void trigger_dps368_value_gathering(struct k_work *work)
     }
     if(last_psr != data.psr_val)
     {
-        if(data.prs_val != NULL)
+        if(&data.psr_val != NULL)
         {
             last_psr = data.psr_val;
             psr_available = true;
         }
         else
         {
+            data.psr_val = last_psr;
             psr_available = true;
         }
     }
     if(last_tmp != data.tmp_val)
     {
-        if(data.tmp_val != NULL)
+        if(&data.tmp_val != NULL)
         {
             last_tmp = data.tmp_val;
             tmp_available = true;
         }
         else
         {
+            data.tmp_val = last_tmp;
             tmp_available = true;
         }
     }
