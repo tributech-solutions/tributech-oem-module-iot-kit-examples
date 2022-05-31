@@ -38,16 +38,31 @@ void trigger_dps368_value_gathering(struct k_work *work)
     if(ret != true)
     {
         LOG_ERR("Dps368 value aquisition failed!");
+        return;
     }
     if(last_psr != data.psr_val)
     {
-        last_psr = data.psr_val;
-        psr_available = true;
+        if(data.prs_val != NULL)
+        {
+            last_psr = data.psr_val;
+            psr_available = true;
+        }
+        else
+        {
+            psr_available = true;
+        }
     }
     if(last_tmp != data.tmp_val)
     {
-        last_tmp = data.tmp_val;
-        tmp_available = true;
+        if(data.tmp_val != NULL)
+        {
+            last_tmp = data.tmp_val;
+            tmp_available = true;
+        }
+        else
+        {
+            tmp_available = true;
+        }
     }
 }
 
