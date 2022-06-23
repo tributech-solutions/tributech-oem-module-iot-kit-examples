@@ -13,7 +13,7 @@ To be able to use the Tributech OEM shield sample the user needs to assure that 
 * Antenna with U.FL connector (LTE CAT-M capable)
 * micro LTE SIM card
 * USB A to micro USB cable or 5V power adapter with micro USB
-* Username and Password for Tributech Data-Space-Admin (DSA) access
+* Username and Password for Tributech Web portal access
 
 ### Setup your development kit
 
@@ -39,14 +39,14 @@ When all the above steps are completed follow the instructions in [Verify Device
 
 ### Verify Device2Cloud Communication
 
-The verification of the connection and communication can be done in the DataSpace-Admin (DSA).
+The verification of the connection and communication can be done in the Tributech web portal.
 The user has to access url of the node which is linked to their device and complete the login.
 The address always follows the following format:
 
     node-name.dataspace-node.com
 
 The "node-name" is dependent on the node which is linked to the device. The node-name as well as the login credentials will be provided by Tributech via email.
-The main page of the DSA shows multiple sections all with their own information, but for the verification the user needs to look at the left-hand side an click on the "Agents" tap.
+The main page of the web portal shows multiple sections all with their own information, but for the verification the user needs to look at the left-hand side an click on the "Agents" tap.
 
 ![List of all Agents linked to node](images/AgentManagementTap.png)
 
@@ -97,7 +97,7 @@ When the configuration tap is accessed the first action is triggered and the con
 ![Tributech OEM shield Twin configuration](images/DSAAgentConfigurationPage.png)
 
 Depending on the location where the OEM shield is stationed and the LTE CAT-M connection the configuration pull can last several seconds. 
-When the current configuration is shown in the DSA the user can start changing the configuration. The most important part of the configuration change is to add a custom stream.
+When the current configuration is shown in the web portal the user can start changing the configuration. The most important part of the configuration change is to add a custom stream.
 To be able to add a new stream first the user should add a new source.
 To add a new source right-click on the device name and choose "Add Source". Furthermore search for "Embedded Source" this is the only source which can be added to a OEM shield device all other sources will be ignored. 
 
@@ -127,7 +127,7 @@ Explanation:
 - The `Operation` depicts the command which should be conducted by the OEM shield. 
 - The `ValueMetadataId` links the send timestamp and values to the respective stream. 
 - The `Timestamp` object can be filled with a timestamp in microseconds. If filled with a microseconds value the time is added to the starting date of 1.1.1970. If the timestamp is left at zero the OEM shield attaches the latest timestamp when the value is received.
-- The last object is `Value`, this object holds the value which will be depicted in the DSA. The value linked to the ValueMetadataId has to be encoded Base64. Here the user has to be careful since the value ahs to be encoded accordingly. The Base64 value for 16.5 is "AACEQQ==" if it's encoded as float. If the value is treated as a string the encoded value will be "MTYuNQ==". The value should be encoded according to the configuration of the stream. If the value gets submitted in the wrong format this will lead to unexpected behavior in the DSA, because it will be depicted in the wrong format.
+- The last object is `Value`, this object holds the value which will be depicted in the web portal. The value linked to the ValueMetadataId has to be encoded Base64. Here the user has to be careful since the value ahs to be encoded accordingly. The Base64 value for 16.5 is "AACEQQ==" if it's encoded as float. If the value is treated as a string the encoded value will be "MTYuNQ==". The value should be encoded according to the configuration of the stream. If the value gets submitted in the wrong format this will lead to unexpected behavior in the web portal, because it will be depicted in the wrong format.
 
 ### Consume data via explorer or API
 
