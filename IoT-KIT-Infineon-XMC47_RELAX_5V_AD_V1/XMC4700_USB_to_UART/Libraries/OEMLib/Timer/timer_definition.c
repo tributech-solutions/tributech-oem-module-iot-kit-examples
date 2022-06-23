@@ -12,8 +12,7 @@
 // System Ticker
 void SysTick_Handler()
 {
-	_usCounter++;						// increase us counter
-	_msCounter = _usCounter / 1000;		// get ms counter
+	_msCounter++;						// increase ms counter
 
 }
 

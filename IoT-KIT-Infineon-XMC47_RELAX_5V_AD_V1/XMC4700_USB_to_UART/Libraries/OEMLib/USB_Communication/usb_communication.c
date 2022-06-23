@@ -54,8 +54,8 @@ int16_t wait_for_input()
     {
     	//+++++++++++++++++++++++++++++++++++++++++++
 		// return sended characters -> echo
-//		return_status = (int16_t)USBD_VCOM_SendData((int8_t*)newline,2);
-		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
+//    	return_status = (int16_t)USBD_VCOM_SendData((int8_t*)usb_received_message,strlen(usb_received_message));
+//		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 
 		//+++++++++++++++++++++++++++++++++++++++++++
 		// Parse command

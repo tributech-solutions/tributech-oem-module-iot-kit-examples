@@ -42,11 +42,29 @@
   <nodes xsi:type="ApplicationModel:PeripheralNode">
     <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/ccu43/ccu43_3.dd#/"/>
   </nodes>
+  <nodes xsi:type="ApplicationModel:PeripheralNode">
+    <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/port0/port0_0.dd#/"/>
+  </nodes>
+  <nodes xsi:type="ApplicationModel:PeripheralNode">
+    <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/port4/port4_4.dd#/"/>
+  </nodes>
+  <nodes xsi:type="ApplicationModel:AppNode">
+    <resource xsi:type="ResourceModel:App" href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#/"/>
+  </nodes>
+  <nodes xsi:type="ApplicationModel:PeripheralNode">
+    <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/port3/port3_3.dd#/"/>
+  </nodes>
+  <nodes xsi:type="ApplicationModel:AppNode">
+    <resource xsi:type="ResourceModel:App" href="APPS/RTC/v4_1_14/RTC_0.app#/"/>
+  </nodes>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.6" target="//@nodes.1"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.6" target="//@nodes.0"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.11" target="//@nodes.0"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.11" target="//@nodes.1"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.12" target="//@nodes.11"/>
+  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.16" target="//@nodes.1"/>
+  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.16" target="//@nodes.0"/>
+  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.18" target="//@nodes.1"/>
   <hwConnections href="APPS/CPU_CTRL_XMC4/v4_0_18/CPU_CTRL_XMC4_0.app#//@connections.7"/>
   <hwConnections href="APPS/CPU_CTRL_XMC4/v4_0_18/CPU_CTRL_XMC4_0.app#//@connections.8"/>
   <hwConnections href="APPS/CPU_CTRL_XMC4/v4_0_18/CPU_CTRL_XMC4_0.app#//@connections.9"/>
@@ -73,4 +91,16 @@
   <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.19"/>
   <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.20"/>
   <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.21"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.0"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.1"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.2"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.3"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.7"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.8"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.9"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.10"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.18"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.19"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.20"/>
+  <hwConnections href="APPS/I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@connections.21"/>
 </ApplicationModel:ApplicationData>

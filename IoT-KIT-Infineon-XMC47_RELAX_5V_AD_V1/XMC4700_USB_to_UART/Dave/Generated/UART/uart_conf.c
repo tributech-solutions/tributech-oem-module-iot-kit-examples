@@ -136,7 +136,7 @@ const UART_CONFIG_t UART_OEM_config =
   .receive_mode = UART_TRANSFER_MODE_INTERRUPT,
   .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_16WORDS,
   .rx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_16WORDS,
-  .tx_sr   = 0x1U,
+  .tx_sr   = 0x2U,
 };
 
 /*Runtime handler*/
@@ -175,12 +175,12 @@ UART_STATUS_t UART_OEM_init()
   XMC_USIC_CH_SetInputSource(XMC_UART1_CH0, XMC_USIC_CH_INPUT_DX0, 2U);
   /*Configure transmit FIFO*/
   XMC_USIC_CH_TXFIFO_Configure(XMC_UART1_CH0,
-        16U,
+        48U,
         XMC_USIC_CH_FIFO_SIZE_16WORDS,
         1U);
   /*Configure receive FIFO*/
   XMC_USIC_CH_RXFIFO_Configure(XMC_UART1_CH0,
-        0U,
+        32U,
         XMC_USIC_CH_FIFO_SIZE_16WORDS,
         0U);
   /* Start UART */
@@ -194,16 +194,16 @@ UART_STATUS_t UART_OEM_init()
      2U);
   /*Set service request for tx FIFO transmit interrupt*/
   XMC_USIC_CH_TXFIFO_SetInterruptNodePointer(XMC_UART1_CH0, XMC_USIC_CH_TXFIFO_INTERRUPT_NODE_POINTER_STANDARD,
-      1U);
+      2U);
   /*Set service request for rx FIFO receive interrupt*/
   XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(XMC_UART1_CH0, XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_STANDARD,
        0x0U);
   XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(XMC_UART1_CH0, XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_ALTERNATE,
        0x0U);
   /*Set priority and enable NVIC node for transmit interrupt*/
-  NVIC_SetPriority((IRQn_Type)91, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),
+  NVIC_SetPriority((IRQn_Type)92, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),
                         63U, 0U));
-  NVIC_EnableIRQ((IRQn_Type)91);
+  NVIC_EnableIRQ((IRQn_Type)92);
   /*Set priority and enable NVIC node for receive interrupt*/
   NVIC_SetPriority((IRQn_Type)90, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),
                       3U, 0U));

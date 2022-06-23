@@ -37,7 +37,6 @@ UART_STATUS_t uart_output(const UART_t *const handle,const char *string1)
 void interrupt_uart_oem_receive ()
 {
 	int i;
-	USBD_VCOM_STATUS_t return_status = 0;
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// Receive Byte
@@ -68,13 +67,7 @@ void interrupt_uart_oem_receive ()
 		// if last char is LF
 		if (uart_buffer[uart_read_index-2] == '\r' && uart_buffer[uart_read_index-1] == '\n')
 		{
-			return_status = USBD_VCOM_SendData((int8_t*) uart_buffer, uart_read_index);
-			CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
-
-			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			// Reset command buffer and index
-			memset(uart_buffer,0x0,UART_RECEIVE_BUFFER_SIZE);
-			uart_read_index = 0;
+			new_usb_output_message = true;
 		}
 	}
 }

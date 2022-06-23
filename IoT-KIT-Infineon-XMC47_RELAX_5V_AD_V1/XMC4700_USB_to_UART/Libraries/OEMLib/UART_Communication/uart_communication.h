@@ -15,10 +15,11 @@
 #define UART_RECEIVE_CHARACTER_BUFFER_SIZE  50
 char *uart_output_buffer;		// buffer for uart_output function
 
-uint8_t uart_read_index;
+uint32_t uart_read_index;
 uint8_t *uart_characters;
 char *uart_buffer;
 uint32_t uart_last_receive;
+bool new_usb_output_message;
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Init UART Values

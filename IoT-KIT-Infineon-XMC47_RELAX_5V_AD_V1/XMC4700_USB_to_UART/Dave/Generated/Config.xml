@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Project MotherSystem_Version="" Name="XMC4700_USB_to_UART" Path="C:\Workspaces\DAVE-4.4.2-64Bit\XMC4700_USB_to_UART">
+<Project MotherSystem_Version="" Name="XMC4700_USB_to_UART" Path="C:\Repos\tributech-oem-module-iot-kit-examples\IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1\XMC4700_USB_to_UART">
     <COMPILER>
         <Name>ARM_GCC_HOME</Name>
         <Version/>
@@ -34,6 +34,26 @@
             <Source_File>
                 <File_Name>DAVE.c</File_Name>
                 <Path>\Dave\Generated\DAVE.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>i2c_master.c</File_Name>
+                <Path>\Dave\Generated\I2C_MASTER\i2c_master.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>i2c_master_conf.c</File_Name>
+                <Path>\Dave\Generated\I2C_MASTER\i2c_master_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>rtc.c</File_Name>
+                <Path>\Dave\Generated\RTC\rtc.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>rtc_conf.c</File_Name>
+                <Path>\Dave\Generated\RTC\rtc_conf.c</Path>
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
@@ -131,6 +151,36 @@
             <Header_File>
                 <File_Name>DAVE_Common.h</File_Name>
                 <Path>\Dave\Generated\DAVE_Common.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>i2c_master.h</File_Name>
+                <Path>\Dave\Generated\I2C_MASTER\i2c_master.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>i2c_master_conf.h</File_Name>
+                <Path>\Dave\Generated\I2C_MASTER\i2c_master_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>i2c_master_extern.h</File_Name>
+                <Path>\Dave\Generated\I2C_MASTER\i2c_master_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>rtc.h</File_Name>
+                <Path>\Dave\Generated\RTC\rtc.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>rtc_conf.h</File_Name>
+                <Path>\Dave\Generated\RTC\rtc_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>rtc_extern.h</File_Name>
+                <Path>\Dave\Generated\RTC\rtc_extern.h</Path>
                 <Type>H File</Type>
             </Header_File>
             <Header_File>
@@ -292,6 +342,8 @@
         <Path>\Libraries\OEMLib\Timer</Path>
         <Path>\Libraries\OEMLib\UART_Communication</Path>
         <Path>\Libraries\OEMLib\USB_Communication</Path>
+        <Path>\Libraries\OEMLib\Base64</Path>
+        <Path>\Libraries\OEMLib\DPS310PressureSensor</Path>
     </Include_Path>
     <Preprocessor_Symbols>
         <Assembler_Symbol>XMC4700_F144x2048=</Assembler_Symbol>
