@@ -84,7 +84,7 @@ int main(void)
 		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  // get usb input
 		  wait_for_input();
-		  if(last_command_sent < get_time() && !disable_provide_values)
+		  if(last_command_sent + 10 < get_time() && !disable_provide_values)
 		  {
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// get  temperature and pressure
