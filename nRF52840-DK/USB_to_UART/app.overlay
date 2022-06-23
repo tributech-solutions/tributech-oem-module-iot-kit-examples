@@ -16,11 +16,3 @@
 		label = "CDC_ACM_0";
 	};
 };
-
-&uart1 {
-status = "okay";
-current-speed = <115200>;
-rx-pin = <34>;
-rx-pull-up;
-tx-pin = <33>;
-};
