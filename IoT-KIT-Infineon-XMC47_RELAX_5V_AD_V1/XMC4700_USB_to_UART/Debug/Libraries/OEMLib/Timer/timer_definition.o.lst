@@ -1,0 +1,185 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "timer_definition.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .comm _msCounter,4,4
+  20              	 .comm _usCounter,4,4
+  21              	 .section .text.SysTick_Handler,"ax",%progbits
+  22              	 .align 2
+  23              	 .global SysTick_Handler
+  24              	 .thumb
+  25              	 .thumb_func
+  27              	SysTick_Handler:
+  28              	.LFB349:
+  29              	 .file 1 "../Libraries/OEMLib/Timer/timer_definition.c"
+   1:../Libraries/OEMLib/Timer/timer_definition.c **** /*
+   2:../Libraries/OEMLib/Timer/timer_definition.c ****  * timer_definition.c
+   3:../Libraries/OEMLib/Timer/timer_definition.c ****  *
+   4:../Libraries/OEMLib/Timer/timer_definition.c ****  *  Created on: 21 Jun 2022
+   5:../Libraries/OEMLib/Timer/timer_definition.c ****  *      Author: AndreasAscher
+   6:../Libraries/OEMLib/Timer/timer_definition.c ****  */
+   7:../Libraries/OEMLib/Timer/timer_definition.c **** 
+   8:../Libraries/OEMLib/Timer/timer_definition.c **** #include "timer_definition.h"
+   9:../Libraries/OEMLib/Timer/timer_definition.c **** 
+  10:../Libraries/OEMLib/Timer/timer_definition.c **** 
+  11:../Libraries/OEMLib/Timer/timer_definition.c **** //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  12:../Libraries/OEMLib/Timer/timer_definition.c **** // System Ticker
+  13:../Libraries/OEMLib/Timer/timer_definition.c **** void SysTick_Handler()
+  14:../Libraries/OEMLib/Timer/timer_definition.c **** {
+  30              	 .loc 1 14 0
+  31              	 .cfi_startproc
+  32              	 
+  33              	 
+  34              	 
+  35 0000 80B4     	 push {r7}
+  36              	.LCFI0:
+  37              	 .cfi_def_cfa_offset 4
+  38              	 .cfi_offset 7,-4
+  39 0002 00AF     	 add r7,sp,#0
+  40              	.LCFI1:
+  41              	 .cfi_def_cfa_register 7
+  15:../Libraries/OEMLib/Timer/timer_definition.c **** 	_msCounter++;						// increase ms counter
+  42              	 .loc 1 15 0
+  43 0004 044B     	 ldr r3,.L2
+  44 0006 1B68     	 ldr r3,[r3]
+  45 0008 0133     	 adds r3,r3,#1
+  46 000a 034A     	 ldr r2,.L2
+  47 000c 1360     	 str r3,[r2]
+  16:../Libraries/OEMLib/Timer/timer_definition.c **** 
+  17:../Libraries/OEMLib/Timer/timer_definition.c **** }
+  48              	 .loc 1 17 0
+  49 000e BD46     	 mov sp,r7
+  50              	.LCFI2:
+  51              	 .cfi_def_cfa_register 13
+  52              	 
+  53 0010 5DF8047B 	 ldr r7,[sp],#4
+  54              	.LCFI3:
+  55              	 .cfi_restore 7
+  56              	 .cfi_def_cfa_offset 0
+  57 0014 7047     	 bx lr
+  58              	.L3:
+  59 0016 00BF     	 .align 2
+  60              	.L2:
+  61 0018 00000000 	 .word _msCounter
+  62              	 .cfi_endproc
+  63              	.LFE349:
+  65              	 .section .text.check_timeout,"ax",%progbits
+  66              	 .align 2
+  67              	 .global check_timeout
+  68              	 .thumb
+  69              	 .thumb_func
+  71              	check_timeout:
+  72              	.LFB350:
+  18:../Libraries/OEMLib/Timer/timer_definition.c **** 
+  19:../Libraries/OEMLib/Timer/timer_definition.c **** //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  20:../Libraries/OEMLib/Timer/timer_definition.c **** // Check Timeout  -> return true if timeout reached
+  21:../Libraries/OEMLib/Timer/timer_definition.c **** int check_timeout(uint32_t counter, uint32_t var, uint32_t timeout)
+  22:../Libraries/OEMLib/Timer/timer_definition.c **** {
+  73              	 .loc 1 22 0
+  74              	 .cfi_startproc
+  75              	 
+  76              	 
+  77              	 
+  78 0000 80B4     	 push {r7}
+  79              	.LCFI4:
+  80              	 .cfi_def_cfa_offset 4
+  81              	 .cfi_offset 7,-4
+  82 0002 85B0     	 sub sp,sp,#20
+  83              	.LCFI5:
+  84              	 .cfi_def_cfa_offset 24
+  85 0004 00AF     	 add r7,sp,#0
+  86              	.LCFI6:
+  87              	 .cfi_def_cfa_register 7
+  88 0006 F860     	 str r0,[r7,#12]
+  89 0008 B960     	 str r1,[r7,#8]
+  90 000a 7A60     	 str r2,[r7,#4]
+  23:../Libraries/OEMLib/Timer/timer_definition.c **** 	if (counter > var + timeout || (counter < var && var > timeout))
+  91              	 .loc 1 23 0
+  92 000c BA68     	 ldr r2,[r7,#8]
+  93 000e 7B68     	 ldr r3,[r7,#4]
+  94 0010 1A44     	 add r2,r2,r3
+  95 0012 FB68     	 ldr r3,[r7,#12]
+  96 0014 9A42     	 cmp r2,r3
+  97 0016 07D3     	 bcc .L5
+  98              	 .loc 1 23 0 is_stmt 0 discriminator 1
+  99 0018 FA68     	 ldr r2,[r7,#12]
+ 100 001a BB68     	 ldr r3,[r7,#8]
+ 101 001c 9A42     	 cmp r2,r3
+ 102 001e 05D2     	 bcs .L6
+ 103              	 .loc 1 23 0 discriminator 2
+ 104 0020 BA68     	 ldr r2,[r7,#8]
+ 105 0022 7B68     	 ldr r3,[r7,#4]
+ 106 0024 9A42     	 cmp r2,r3
+ 107 0026 01D9     	 bls .L6
+ 108              	.L5:
+  24:../Libraries/OEMLib/Timer/timer_definition.c **** 	{
+  25:../Libraries/OEMLib/Timer/timer_definition.c **** 		return true;
+ 109              	 .loc 1 25 0 is_stmt 1
+ 110 0028 0123     	 movs r3,#1
+ 111 002a 00E0     	 b .L7
+ 112              	.L6:
+  26:../Libraries/OEMLib/Timer/timer_definition.c **** 	}
+  27:../Libraries/OEMLib/Timer/timer_definition.c **** 	else
+  28:../Libraries/OEMLib/Timer/timer_definition.c **** 	{
+  29:../Libraries/OEMLib/Timer/timer_definition.c **** 		return false;
+ 113              	 .loc 1 29 0
+ 114 002c 0023     	 movs r3,#0
+ 115              	.L7:
+  30:../Libraries/OEMLib/Timer/timer_definition.c **** 	}
+  31:../Libraries/OEMLib/Timer/timer_definition.c **** }
+ 116              	 .loc 1 31 0
+ 117 002e 1846     	 mov r0,r3
+ 118 0030 1437     	 adds r7,r7,#20
+ 119              	.LCFI7:
+ 120              	 .cfi_def_cfa_offset 4
+ 121 0032 BD46     	 mov sp,r7
+ 122              	.LCFI8:
+ 123              	 .cfi_def_cfa_register 13
+ 124              	 
+ 125 0034 5DF8047B 	 ldr r7,[sp],#4
+ 126              	.LCFI9:
+ 127              	 .cfi_restore 7
+ 128              	 .cfi_def_cfa_offset 0
+ 129 0038 7047     	 bx lr
+ 130              	 .cfi_endproc
+ 131              	.LFE350:
+ 133 003a 00BF     	 .text
+ 134              	.Letext0:
+ 135              	 .file 2 "c:\\program files\\dave-ide-4.4.2-64bit\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 136              	 .file 3 "c:\\program files\\dave-ide-4.4.2-64bit\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 137              	 .file 4 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Libraries/CMSIS/Infineon/XMC4700_series/Include/XMC4700.h"
+ 138              	 .file 5 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Libraries/XMCLib/inc/xmc_usic.h"
+ 139              	 .file 6 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Libraries/XMCLib/inc/xmc_usbd_regs.h"
+ 140              	 .file 7 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Libraries/XMCLib/inc/xmc_usbd.h"
+ 141              	 .file 8 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Dave/Generated/USBD/usbd.h"
+ 142              	 .file 9 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Libraries/CMSIS/Include/cmsis_gcc.h"
+ 143              	 .file 10 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Libraries/CMSIS/Include/core_cm4.h"
+ 144              	 .file 11 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Libraries/CMSIS/Infineon/XMC4700_series/Include/system_XMC4700.h"
+ 145              	 .file 12 "C:/Repos/tributech-oem-module-iot-kit-examples/IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1/XMC4700_USB_to_UART/Dave/Generated/USBD/usbd_extern.h"
+ 146              	 .file 13 "../Libraries/OEMLib/Timer/timer_definition.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 timer_definition.c
+                            *COM*:00000004 _msCounter
+                            *COM*:00000004 _usCounter
+    {standard input}:22     .text.SysTick_Handler:00000000 $t
+    {standard input}:27     .text.SysTick_Handler:00000000 SysTick_Handler
+    {standard input}:61     .text.SysTick_Handler:00000018 $d
+    {standard input}:66     .text.check_timeout:00000000 $t
+    {standard input}:71     .text.check_timeout:00000000 check_timeout
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS
