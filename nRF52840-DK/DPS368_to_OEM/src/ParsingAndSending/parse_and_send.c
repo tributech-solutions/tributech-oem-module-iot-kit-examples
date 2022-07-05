@@ -59,6 +59,8 @@ void send_tmp_and_psr_value_to_oem(void)
     transaction_nr++;
 
     k_free(response_tmp_psr);
+    k_free(base64_tmp_string);
+    k_free(base64_psr_string);
     psr_available = false;
     tmp_available = false;
 }
