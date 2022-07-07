@@ -1,4 +1,4 @@
-# Tributech OEM Shield sample with nRF52840DK
+# Tributech OEM Shield sample with Infineon XMC4700 Relax Kit
 
 ## Develompment Kit Setup:
 
@@ -20,14 +20,16 @@ To be able to use the Tributech OEM shield sample the user needs to assure that 
 With the following steps the user is able to assemble and start the sample kit. All Development Kits are supplied by Tributech with preprogrammed configurations and for the initial setup no software changes should be needed.
 
 1. Connect your OEM shield with the XMC Relax Kit
-![Connect your OEM shield with the XMC Relax Kit](images/xmc47_OEM.png)
+![Connect your OEM shield with the XMC Relax Kit](images/xmc4700_OEM.png)
 2. Put the SIM card into the OEM shield
-![Put the SIM card into the OEM shield](images/xmc47_OEM_SIM.png)
+![Put the SIM card into the OEM shield](images/xmc4700_OEM_SIM.png)
 3. Connect the antenna with the OEM shield
 4. Stack the My-IoT-Adapter on top of the OEM shield with the S2GO-Pressure-DPS368 sensor
 ![Connect the S2GO-Pressure-DPS368 sensor with the My-IoT-Adapter](images/adapter_dps368.png)
 6. Supply power to the XMC Relax Kit via the micro USB power connector
-![Supply power to the XMC Relax Kit via the micro USB power connector](images/xmc47_power.png)
+![Supply power to the XMC Relax Kit via the micro USB power connector](images/xmc4700_power.png)
+
+Set the IOREF (IOs voltage selector) to 3.3V that the OEM shield doesn't get damaged by 5V.
 
 When all steps are completed the green LED of the Tributech OEM shield will blink when the initialization of the board has been completed successfully. 
 The blue LED will start blinking when a successful LTE CAT-M connection is established.
