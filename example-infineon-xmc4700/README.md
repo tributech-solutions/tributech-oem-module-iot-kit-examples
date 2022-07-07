@@ -70,12 +70,12 @@ The stream values will be depicted in a graph or table format below the stream i
 
 ### Setup Dev Environment
 
-To be able to send individual values/streams via the Tributech OEM shield these values have to be transferred to the device via a UART connection. In this sample the nRF52840 Development Kit is in use.
+To be able to send individual values/streams via the Tributech OEM shield these values have to be transferred to the device via a UART connection. In this sample the XMC4700 Relax Kit is in use.
 
-In this sample kit the one normal sequence consists of a sensor gathering call from the nRF52840 Development Kit to the S2GO-Pressure-DPS368. After that the sensor values are packaged into a JSON and send to the Tributech OEM shield.
-If a user wants to add their own stream to the device a software change on the nRF52840 Development Kit has to be conducted.
+In this sample kit the one normal sequence consists of a sensor gathering call from the XMC4700 Relax Kit to the S2GO-Pressure-DPS368. After that the sensor values are packaged into a JSON and send to the Tributech OEM shield.
+If a user wants to add their own stream to the device a software change on the XMC4700 Relax Kit has to be conducted.
 
-The pivotal point here is the nRF52840 Development Kit so the user has to setup the Nordic development toolchain to be able to engineer a custom software for this board.
+The pivotal point here is the XMC4700 Relax Kit so the user has to setup the Nordic development toolchain to be able to engineer a custom software for this board.
 The Nordic development tool chain can be obtained on their website:
     
 [Nordic nRF Connect for Desktop](https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-desktop).
@@ -106,7 +106,7 @@ After the source is added the name of the source can be changed on the right-han
 
 ![Add stream to source](images/TributechPlatformAgentAddStream.png)
 
-The last change which needs to be done is the addition of the "Value change options". Adding these options is shown in the following picture. The "value change options" consist of three values: PMIN, PMAX, ST. The PMIN value depicts the time frame which has to pass until a new value can be provided to the OEM in seconds. This value has to be at least 10 seconds. **The PMAX and ST values are at the moment not supported by the OEM modules, but will be added in a future update.** The preloaded software in the nRF52840-DK boards will commit a pressure and temperature value each 60 seconds if a connection is available and the sample kit is assembled in the right manner.
+The last change which needs to be done is the addition of the "Value change options". Adding these options is shown in the following picture. The "value change options" consist of three values: PMIN, PMAX, ST. The PMIN value depicts the time frame which has to pass until a new value can be provided to the OEM in seconds. This value has to be at least 10 seconds. **The PMAX and ST values are at the moment not supported by the OEM modules, but will be added in a future update.** The preloaded software in the XMC4700 boards will commit a pressure and temperature value each 60 seconds if a connection is available and the sample kit is assembled in the right manner.
 
 ![Add value change options to a stream](images/TributechPlatformAgentAddValueChange.png)
 
