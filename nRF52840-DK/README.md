@@ -59,12 +59,12 @@ Name depicts the different names of the agents. Type lists the device type of th
 
 Here the user has to select their own device and click on it. The names of the device will be provided by Tributech via email and will be depicted either on the device box or on the device itself. This will lead the user to the "Agent Management" page. An example of the agent management page is shown in the following picture:
 
-![Agent management page: agent: Tributech OEM node:dev-node-a](images/DSAAgent.png)
+![Agent management page: agent: Tributech OEM node:dev-node-a](images/TributechPlatformAgentManagement.png)
 
 Since the connectivity already is verified when the device is listed as online the next step is to verify the device communication. This can be done via clicking on the on of the listed streams.
 This action will show the stream information and it's associated values link in the picture below:
 
-![Temperature stream of an agent](images/DSAAgentStream.png)
+![Temperature stream of an agent](images/TributechPlatformAgentStream.png)
 
 The stream values will be depicted in a graph or table format below the stream information.
 ## Get started with your project
@@ -86,30 +86,30 @@ The needed software and toolchain parts can be downloaded in one package.
 
 ### Configure OEM Module
 
-The Tributech OEM shield only acknowledges values provided via UART which have a valid ValueMetadataId. These ValueMetadataIds are generated automatically when a new stream is added to the Twin configuration of the OEM shield. The Twin configuration is a electronic representation of a IoT-device, it contains the configuration parameters like metadata, configurations and conditions of the device and their different correlations to each other. Parts of this Twin configuration can be altered by the user like adding sources and streams to the configuration. Thus the user has to configure the OEM shield via the Data-Space-Admin. For more in depth information on device twins follow this link Twin ["Understand and use device twins in IoT Hub"](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins).
+The Tributech OEM shield only acknowledges values provided via UART which have a valid ValueMetadataId. These ValueMetadataIds are generated automatically when a new stream is added to the Twin configuration of the OEM shield. The Twin configuration is a electronic representation of a IoT-device, it contains the configuration parameters like metadata, configurations and conditions of the device and their different correlations to each other. Parts of this Twin configuration can be altered by the user like adding sources and streams to the configuration. Thus the user has to configure the OEM shield via the Data-Space-Admin. For more in depth information on device twins follow this link Twin "[How to use digital Twins for IoT devices configurations](https://tributech.io/blog/digital-twins-for-IoT-device-configurations)".
 
 The configuration is sent to the OEM shield via a MQTT connection which means the device has to be online for a configuration update. If the device is online a new tap can be seen in the Agent management page called "Configuration". This is depicted in the picture below:
 
-![Agent management page Configuration tap](images/DSAAgentConfiguration.png)
+![Agent management page Configuration tap](images/TributechPlatformAgentConfiguration.png)
 
 When the configuration tap is accessed the first action is triggered and the configuration is pulled form the linked OEM shield. This configuration is then depicted on the webpage:
 
-![Tributech OEM shield Twin configuration](images/DSAAgentConfigurationPage.png)
+![Tributech OEM shield Twin configuration](images/TributechPlatformAgentConfigurationPage.png)
 
 Depending on the location where the OEM shield is stationed and the LTE CAT-M connection the configuration pull can last several seconds. 
 When the current configuration is shown in the web portal the user can start changing the configuration. The most important part of the configuration change is to add a custom stream.
 To be able to add a new stream first the user should add a new source.
 To add a new source right-click on the device name and choose "Add Source". Furthermore search for "Embedded Source" this is the only source which can be added to a OEM shield device all other sources will be ignored. 
 
-![Add additional source to a pre-conditioned device](images/DSAAgentAddSource.png)
+![Add additional source to a pre-conditioned device](images/TributechPlatformAgentAddSource.png)
 
 After the source is added the name of the source can be changed on the right-hand side. The changes have to be finalized by clicking on the "Apply" button on the bottom of the configuration. If the changes are done a stream can be added to the source. Again via right-clicking on the source a dropdown menu is shown. In this menu navigate to "Add Streams" and use the only available option "Embedded Stream". The configuration of the stream follows the same principle as the name change of the Source.
 
-![Add stream to source](images/DSAAgentAddStream.png)
+![Add stream to source](images/TributechPlatformAgentAddStream.png)
 
 The last change which needs to be done is the addition of the "Value change options". Adding these options is shown in the following picture. The "value change options" consist of three values: PMIN, PMAX, ST. The PMIN value depicts the time frame which has to pass until a new value can be provided to the OEM in seconds. This value has to be at least 10 seconds. **The PMAX and ST values are at the moment not supported by the OEM modules, but will be added in a future update.** The preloaded software in the nRF52840-DK boards will commit a pressure and temperature value each 60 seconds if a connection is available and the sample kit is assembled in the right manner.
 
-![Add value change options to a stream](images/DSAAgentAddValueChange.png)
+![Add value change options to a stream](images/TributechPlatformAgentAddValueChange.png)
 
 With these changes the configuration can be send to the OEM shield via the "Apply Configuration" button.
 
@@ -118,8 +118,18 @@ With these changes the configuration can be send to the OEM shield via the "Appl
 If the OEM shield configuration is done, the user is able to send data to the device via the UARt connection. The command used for this procedure is "ProvideValues".
 A complete "ProvideValues" command looks like the following.
 
-```
-{"TransactionNr": 14, "Operation": "ProvideValues","ValueMetadataId": "10101010-2020-3030-4040-505050505051", "Values": [{"Timestamp": 1615879096949000000, "Value": "MZiz"}]}
+```json
+{
+   "TransactionNr":14,
+   "Operation":"ProvideValues",
+   "ValueMetadataId":"10101010-2020-3030-4040-505050505051",
+   "Values":[
+      {
+         "Timestamp":1615879096949000000,
+         "Value":"MZiz"
+      }
+   ]
+}
 ```
 
 Explanation:
