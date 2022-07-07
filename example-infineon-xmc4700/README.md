@@ -29,7 +29,7 @@ With the following steps the user is able to assemble and start the sample kit. 
 6. Supply power to the XMC Relax Kit via the micro USB power connector
 ![Supply power to the XMC Relax Kit via the micro USB power connector](images/xmc4700_power.png)
 
-Set the IOREF (IOs voltage selector) to 3.3V that the OEM shield doesn't get damaged by 5V.
+Set the IOREF (IOs voltage selector) to 3.3V that the OEM shield won't be damaged by 5V levels.
 
 When all steps are completed the green LED of the Tributech OEM shield will blink when the initialization of the board has been completed successfully. 
 The blue LED will start blinking when a successful LTE CAT-M connection is established.
