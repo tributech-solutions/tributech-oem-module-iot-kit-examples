@@ -118,8 +118,18 @@ With these changes the configuration can be send to the OEM shield via the "Appl
 If the OEM shield configuration is done, the user is able to send data to the device via the UARt connection. The command used for this procedure is "ProvideValues".
 A complete "ProvideValues" command looks like the following.
 
-```
-{"TransactionNr": 14, "Operation": "ProvideValues","ValueMetadataId": "10101010-2020-3030-4040-505050505051", "Values": [{"Timestamp": 1615879096949000000, "Value": "MZiz"}]}
+```json
+{
+   "TransactionNr":14,
+   "Operation":"ProvideValues",
+   "ValueMetadataId":"10101010-2020-3030-4040-505050505051",
+   "Values":[
+      {
+         "Timestamp":1615879096949000000,
+         "Value":"MZiz"
+      }
+   ]
+}
 ```
 
 Explanation:
