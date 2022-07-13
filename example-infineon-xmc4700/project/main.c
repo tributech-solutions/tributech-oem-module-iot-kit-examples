@@ -15,6 +15,7 @@
 #include "dps310_ctrl.h"
 #include "i2c_master_ctrl.h"
 #include "base64.h"
+#include "tributech.h"
 
 /**
 
@@ -36,13 +37,15 @@ int main(void)
   DAVE_STATUS_t status;
   time_t last_command_sent;
   bool disable_provide_values;
-  char valuemetadataid_temperature[37] = "fd54f5ca-15c9-4e01-b4b3-4247198a846c";	// ValueMetaDataId 1
-  char valuemetadataid_preasure[37] = "4e8e64f4-5439-4676-85c5-117280901bc0";		// ValueMetaDataId 2
+  bool stream_ids_received;
+  char valuemetadataid_temperature[37] = "";	// ValueMetaDataId 1
+  char valuemetadataid_pressure[37] = "";		// ValueMetaDataId 2
 
   char *base64_string_temperature;      // pointer to base64 string
-  char *base64_string_preasure;         // pointer to base64 string
+  char *base64_string_pressure;         // pointer to base64 string
   uint16_t base64_length;				// base64 length
   char * provide_values_message;		// provide values output message
+
 
 
   status = DAVE_Init();           /* Initialization of DAVE APPs  */
@@ -84,7 +87,33 @@ int main(void)
 		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  // get usb input
 		  wait_for_input();
-		  if(last_command_sent + 10 < get_time() && !disable_provide_values)
+
+		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		  // if no configuration received -> send getConfiguration command
+		  if (!configuration_received)
+		  {
+			  if (last_command_sent + 10 < get_time())
+			  {
+				  uart_output(&UART_OEM,"{\"TransactionNr\": 1, \"Operation\": \"GetConfiguration\"}");
+				  get_config_transactionnr = 1;
+				  last_command_sent = get_time();
+			  }
+		  }
+		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		  // configuration received -> parse ids
+		  else if (configuration_received && !stream_ids_received)
+		  {
+			  get_valueMetaDataId("Stream Temp", valuemetadataid_temperature);
+			  get_valueMetaDataId("Stream Pressure", valuemetadataid_pressure);
+
+			  if(strcmp(valuemetadataid_temperature,"") != 0 && strcmp(valuemetadataid_pressure,"") != 0)
+			  {
+				  stream_ids_received = true;
+			  }
+		  }
+		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		  // ids received -> publish values
+		  else if(last_command_sent + 10 < get_time() && stream_ids_received && !disable_provide_values)
 		  {
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// get  temperature and pressure
@@ -97,12 +126,12 @@ int main(void)
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// build base64 strings from values
 				base64_string_temperature = base64_encode(&dps310_status.temp_meas, sizeof(float), &base64_length);
-				base64_string_preasure = base64_encode(&dps310_status.pres_meas, sizeof(float), &base64_length);
+				base64_string_pressure = base64_encode(&dps310_status.pres_meas, sizeof(float), &base64_length);
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// build provide values message
 				provide_values_message = calloc(500,sizeof(char));
-				sprintf(provide_values_message, "{\"TransactionNr\": %s,\"Operation\": \"ProvideValues\",\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": 0,\"Value\": \"%s\"}],\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": 0,\"Value\": \"%s\"}]}\r\n" , transaction_nr_string, valuemetadataid_temperature, base64_string_temperature, valuemetadataid_preasure, base64_string_preasure);
+				sprintf(provide_values_message, "{\"TransactionNr\": %s,\"Operation\": \"ProvideValues\",\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": 0,\"Value\": \"%s\"}],\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": 0,\"Value\": \"%s\"}]}\r\n" , transaction_nr_string, valuemetadataid_temperature, base64_string_temperature, valuemetadataid_pressure, base64_string_pressure);
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// output via usb
@@ -115,7 +144,7 @@ int main(void)
 
 				delay_ms(100);
 				free(base64_string_temperature);
-				free(base64_string_preasure);
+				free(base64_string_pressure);
 				free(provide_values_message);
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -133,6 +162,10 @@ int main(void)
 		  USBD_VCOM_SendData((int8_t*) uart_buffer, strlen(uart_buffer));
 		  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 		  new_usb_output_message = false;
+
+		  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		  // parse oem response and save configuration
+		  parse_oem_response_save_configuration(uart_buffer, strlen(uart_buffer));
 
 		  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  // reset uart receive buffer

@@ -36,4 +36,8 @@ time_t get_time(void);
 // increase transaction number
 void increase_transaction_nr(void);
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// minimum of two uint32_t values
+uint32_t min2_uint32_t (uint32_t value1, uint32_t value2);
+
 #endif

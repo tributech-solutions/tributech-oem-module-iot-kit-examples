@@ -73,5 +73,16 @@ void delay_ms(uint32_t ms)
 					__NOP();
 }
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// minimum of two uint32_t values
+uint32_t min2_uint32_t (uint32_t value1, uint32_t value2)
+{
+	if (value2 < value1)
+	{
+		return value2;
+	}
+	return value1;
+}
+
 
 
