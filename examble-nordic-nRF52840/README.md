@@ -115,7 +115,7 @@ With these changes the configuration can be send to the OEM shield via the "Appl
 
 ### Provide telemetry data via UART
 
-If the OEM shield configuration is done, the user is able to send data to the device via the UARt connection. The command used for this procedure is "ProvideValues".
+If the OEM shield configuration is done, the user is able to send data to the device via the UART connection. The command used for this procedure is "ProvideValues".
 A complete "ProvideValues" command looks like the following.
 
 ```json
