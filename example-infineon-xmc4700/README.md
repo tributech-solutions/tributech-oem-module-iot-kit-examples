@@ -75,10 +75,10 @@ To be able to send individual values/streams via the Tributech OEM shield these 
 In this sample kit the one normal sequence consists of a sensor gathering call from the XMC4700 Relax Kit to the S2GO-Pressure-DPS368. After that the sensor values are packaged into a JSON and send to the Tributech OEM shield.
 If a user wants to add their own stream to the device a software change on the XMC4700 Relax Kit has to be conducted.
 
-The pivotal point here is the XMC4700 Relax Kit so the user has to setup the Nordic development toolchain to be able to engineer a custom software for this board.
-The Nordic development tool chain can be obtained on their website:
+The pivotal point here is the XMC4700 Relax Kit so the user has to setup the Infineon Dave IDE to be able to engineer a custom software for this board.
+The Infineon Dave IDE can be obtained on their website:
     
-[Nordic nRF Connect for Desktop](https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-desktop).
+[Infineon Dave IDE](https://softwaretools.infineon.com/tools/com.ifx.tb.tool.daveide).
 
 The needed software and toolchain parts can be downloaded in one package. 
 
@@ -114,7 +114,7 @@ With these changes the configuration can be send to the OEM shield via the "Appl
 
 ### Provide telemetry data via UART
 
-If the OEM shield configuration is done, the user is able to send data to the device via the UARt connection. The command used for this procedure is "ProvideValues".
+If the OEM shield configuration is done, the user is able to send data to the device via the UART connection. The command used for this procedure is "ProvideValues".
 A complete "ProvideValues" command looks like the following.
 
 ```json
