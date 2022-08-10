@@ -65,7 +65,7 @@ int main(void)
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // The following boolean disables the provide values function.
-  // This means that the sensor values from the DPS368 are not used anymore and the user is able to send ata to the OEm via the  COM port.
+  // This means that the sensor values from the DPS368 are not used anymore and the user is able to send data to the OEm via the  COM port.
   disable_provide_values = true; 		// true for linking
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
