@@ -6,6 +6,7 @@
  */
 
 #include <functions.h>
+#include <string.h>
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // String To UpperCase
