@@ -12,6 +12,8 @@
 
 extern uint32_t transaction_nr;
 extern struct k_sem sending_sem;
+extern char valuemetadataid_tmp[37];
+extern char valuemetadataid_psr[37];
 
 //send temperature value to oem in provide values sleeve
 void send_tmp_value_to_oem(void);

@@ -22,6 +22,18 @@ target_sources(app PRIVATE src/DPS368/dps368.c)
 zephyr_include_directories(src/ParsingAndSending)
 target_sources(app PRIVATE src/ParsingAndSending/parse_and_send.c)
 
+#include Tributech lib
+zephyr_include_directories(src/TributechLib)
+target_sources(app PRIVATE src/TributechLib/tributech.c)
+
+#include jsmn json parser
+zephyr_include_directories(src/JSMNParser)
+target_sources(app PRIVATE src/JSMNParser/jsmn.c)
+
+#include general functions
+zephyr_include_directories(src/Functions)
+target_sources(app PRIVATE src/Functions/functions.c)
+
 # include pasring and sending
 zephyr_include_directories(src/BASE64)
 target_sources(app PRIVATE src/BASE64/BASE64.c)

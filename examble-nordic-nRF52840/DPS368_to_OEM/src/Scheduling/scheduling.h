@@ -12,8 +12,6 @@
 
 extern struct k_work_q dps368_workqueue;
 extern struct k_timer dps368_timer;
-extern char valuemetadataid_tmp[100];
-extern char valuemetadataid_psr[100];
 extern bool tmp_available;
 extern bool psr_available;
 
