@@ -19,6 +19,8 @@ LOG_MODULE_REGISTER(parse_and_send, LOG_LEVEL_INF);
 
 char tmp_value_string[30];
 char psr_value_string[30];
+char valuemetadataid_tmp[37];
+char valuemetadataid_psr[37];
 uint32_t transaction_nr;
 
 void send_tmp_and_psr_value_to_oem(void)
@@ -29,7 +31,7 @@ void send_tmp_and_psr_value_to_oem(void)
     }
 
     // Temperature definitions
-    char valuemetadataid_tmp[100] = "95817384-7cec-4bb5-895f-b07c305b9d50";
+    //valuemetadataid_tmp = "95817384-7cec-4bb5-895f-b07c305b9d50";
     char *               response_tmp_psr;
     uint16_t             base64_tmp_length;            // base64 length
     char                 *base64_tmp_string;           // pointer to base64 string
@@ -40,7 +42,7 @@ void send_tmp_and_psr_value_to_oem(void)
     base64_tmp_string = base64_encode(&temp_tmp_val, sizeof(float), &base64_tmp_length);
 
     // Pressure definitions
-    char valuemetadataid_psr[100] = "0df64d80-a8b4-4154-92bf-7e7a82794de0";
+    //valuemetadataid_psr = "0df64d80-a8b4-4154-92bf-7e7a82794de0";
     uint16_t        base64_psr_length;            // base64 length
     char            *base64_psr_string;           // pointer to base64 string
     float           temp_psr_val = data.psr_val;
