@@ -1,4 +1,4 @@
-# Tributech OEM Shield sample with Infineon XMC4700 Relax Kit
+# Tributech OEM Shield sample with Arduino UNO R3
 
 ## Develompment Kit Setup:
 
@@ -7,7 +7,7 @@
 To be able to use the Tributech OEM shield sample the user needs to assure that all  of the following pre-conditions and resources are at hand.  
 
 * Tributech [OEM Shield](https://tributechwebcontent.blob.core.windows.net/tributech-web-content/Specsheet_2022_OEM.pdf)
-* Infineon [XMC 4700 Relax Kit](https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc47_relax_v1/)
+* Arduino [UNO R3](https://docs.arduino.cc/hardware/uno-rev3)
 * Infineon [My-IoT-Adapter](https://www.infineon.com/cms/de/product/evaluation-boards/my-iot-adapter/)
 * Infineon [S2GO-Pressure-DPS368](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-pressure-dps368/)
 * Antenna with U.FL connector (LTE CAT-M capable)
@@ -17,12 +17,12 @@ To be able to use the Tributech OEM shield sample the user needs to assure that 
 
 ### Setup your development kit
 
-With the following steps the user is able to assemble and start the sample kit. All Development Kits are supplied by Tributech with preprogrammed configurations and for the initial setup no software changes should be needed.
+With the following steps the user is able to assemble and start the sample kit. 
 
-1. Connect your OEM shield to the XMC Relax Kit
-![Connect your OEM shield to the Arduino UNO](images/arduino_oem.png)
+1. Connect your OEM shield to the Arduino UNO
+![Connect your OEM shield to the Arduino UNO](images/uno_oem.png)
 2. Put the SIM card into the OEM shield
-![Put the SIM card into the OEM shield](images/arduino_oem_sim.png)
+![Put the SIM card into the OEM shield](images/uno_oem_sim.png)
 3. Connect the antenna to the OEM shield
 4. Stack the My-IoT-Adapter on top of the OEM shield with the S2GO-Pressure-DPS368 sensor
 ![Connect the S2GO-Pressure-DPS368 sensor with the My-IoT-Adapter](images/adapter_dps368.png)
@@ -68,7 +68,7 @@ The stream values will be depicted in a graph or table format below the stream i
 
 ### Setup Dev Environment
 
-To be able to send individual values/streams via the Tributech OEM shield these values have to be transferred to the device via a UART connection. In this sample the Arduino UNO R3 Kit is in use.
+To be able to send individual values/streams via the Tributech OEM shield these values have to be transferred to the device via a UART connection. In this sample the Arduino UNO R3 Kit is used.
 
 In this sample kit the one normal sequence consists of a sensor gathering call from the Arduino Uno R3 Kit to the S2GO-Pressure-DPS368. After that the sensor values are packaged into a JSON and send to the Tributech OEM shield.
 If a user wants to add their own stream to the device a software change on the Arduino Uno R3 Kit has to be conducted.
@@ -76,7 +76,7 @@ If a user wants to add their own stream to the device a software change on the A
 The pivotal point here is the Arduino Uno R3 Kit so the user has to setup the Arduino IDE to be able to engineer a custom software for this board.
 The Arduino IDE can be downloaded on their website:
     
-[Arduino IDE](https://www.arduino.cc/en/software).
+[Arduino IDE](https://www.arduino.cc/en/software)
 
 Install the IDE and open the project file. Install the two Libraries Base64 and DPS310 (DPS368) and insert the correct ValueMetaDataIds in the code.
 
@@ -84,9 +84,11 @@ Install the IDE and open the project file. Install the two Libraries Base64 and 
 
 ![Install Adafruit DPS310 library](images/LibraryAdafruitDPS310.JPG)
 
+![Replace ValueMetaDataIds ](images/ReplaceValueMetaDataIds.JPG)
+
 To flash the project you have to unplug the OEM Shield.
 
-If you flashed the microcontroller plug the OEM shield again on the Arduino UNO and repower it. You cannot open the usb serial connection because the Arduino UNO has only one serial channel and this one is now used for the OEM Shield. 
+If you flashed the microcontroller stack the OEM shield again on the Arduino UNO and repower it. You cannot open the usb serial connection because the Arduino UNO has only one serial channel and this one is now used for the OEM Shield. 
 
 
 ### Configure OEM Module
@@ -112,7 +114,7 @@ After the source is added the name of the source can be changed on the right-han
 
 ![Add stream to source](images/TributechPlatformAgentAddStream.png)
 
-The last change which needs to be done is the addition of the "Value change options". Adding these options is shown in the following picture. The "value change options" consist of three values: PMIN, PMAX, ST. The PMIN value depicts the time frame which has to pass until a new value can be provided to the OEM in seconds. This value has to be at least 10 seconds. **The PMAX and ST values are at the moment not supported by the OEM modules, but will be added in a future update.** The preloaded software in the XMC4700 boards will commit a pressure and temperature value each 60 seconds if a connection is available and the sample kit is assembled in the right manner.
+The last change which needs to be done is the addition of the "Value change options". Adding these options is shown in the following picture. The "value change options" consist of three values: PMIN, PMAX, ST. The PMIN value depicts the time frame which has to pass until a new value can be provided to the OEM in seconds. This value has to be at least 10 seconds. **The PMAX and ST values are at the moment not supported by the OEM modules, but will be added in a future update.** The preloaded software will commit a pressure and temperature value each 5 seconds if a connection is available and the sample kit is assembled in the right manner.
 
 ![Add value change options to a stream](images/TributechPlatformAgentAddValueChange.png)
 
