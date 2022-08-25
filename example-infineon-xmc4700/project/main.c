@@ -64,11 +64,16 @@ int main(void)
   SysTick_Config(SystemCoreClock / 1000);	// Systemtick 1 ms
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // The following boolean disables the provide values function.
+  // This means that the sensor values from the DPS368 are not used anymore and the user is able to send data to the OEm via the  COM port.
+  disable_provide_values = true; 		// true for linking
+
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // init usb and uart interface
   init_usb_Connection();
   init_uart_connection();
 
-  disable_provide_values = true; 		// true for linking
+
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // init i2c Interface
@@ -103,8 +108,8 @@ int main(void)
 		  // configuration received -> parse ids
 		  else if (configuration_received && !stream_ids_received)
 		  {
-			  get_valueMetaDataId("Stream Temp", valuemetadataid_temperature);
-			  get_valueMetaDataId("Stream Pressure", valuemetadataid_pressure);
+			  get_valueMetaDataId("Temperature", valuemetadataid_temperature);
+			  get_valueMetaDataId("Pressure", valuemetadataid_pressure);
 
 			  if(strcmp(valuemetadataid_temperature,"") != 0 && strcmp(valuemetadataid_pressure,"") != 0)
 			  {
