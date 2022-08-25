@@ -26,8 +26,8 @@ With the following steps the user is able to assemble and start the sample kit.
 3. Connect the antenna to the OEM shield
 4. Stack the My-IoT-Adapter on top of the OEM shield with the S2GO-Pressure-DPS368 sensor
 ![Connect the S2GO-Pressure-DPS368 sensor with the My-IoT-Adapter](images/adapter_dps368.png)
-6. Supply power to the XMC Relax Kit via the micro USB power connector
-![Supply power to the XMC Relax Kit via the micro USB power connector](images/arduino_uno.png)
+6. Supply power to the Arduino via the micro USB power connector
+![Supply power to the Arduino via the micro USB power connector](images/arduino_uno.png)
 
 When all steps are completed the green LED of the Tributech OEM shield will blink when the initialization of the board has been completed successfully. 
 The blue LED will start blinking when a successful LTE CAT-M connection is established.
@@ -73,7 +73,7 @@ To be able to send individual values/streams via the Tributech OEM shield these 
 In this sample kit the one normal sequence consists of a sensor gathering call from the Arduino Uno R3 Kit to the S2GO-Pressure-DPS368. After that the sensor values are packaged into a JSON and send to the Tributech OEM shield.
 If a user wants to add their own stream to the device a software change on the Arduino Uno R3 Kit has to be conducted.
 
-The pivotal point here is the Arduino Uno R3 Kit so the user has to setup the Arduino IDE to be able to engineer a custom software for this board.
+The pivotal point here is that the user has to setup the Arduino IDE to be able to engineer a custom software for this board.
 The Arduino IDE can be downloaded on their website:
     
 [Arduino IDE](https://www.arduino.cc/en/software)
