@@ -50,12 +50,17 @@ int16_t wait_for_input()
 			return return_status;
 		}
     }
-    else if (bytes == 0 && usb_recv_index > 0 && (usb_received_message[usb_recv_index-1] == '\r' || usb_received_message[usb_recv_index-1] == '\n'))
+    else if (bytes == 0 && usb_recv_index > 0 && (usb_received_message[usb_recv_index-1] == 0x0D || usb_received_message[usb_recv_index-1] == 0x0A))
     {
     	//+++++++++++++++++++++++++++++++++++++++++++
 		// return sended characters -> echo
 //    	return_status = (int16_t)USBD_VCOM_SendData((int8_t*)usb_received_message,strlen(usb_received_message));
 //		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
+    	if(usb_received_message[usb_recv_index-1] == 0x0A && usb_received_message[usb_recv_index-2] != 0x0D)
+    	{
+    		usb_received_message[usb_recv_index-1] = 0x0D;
+    		usb_received_message[usb_recv_index] = 0x0A;
+    	}
 
 		//+++++++++++++++++++++++++++++++++++++++++++
 		// Parse command
