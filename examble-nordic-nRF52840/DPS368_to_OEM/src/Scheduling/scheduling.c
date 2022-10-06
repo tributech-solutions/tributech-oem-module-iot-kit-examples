@@ -78,7 +78,7 @@ void workqueue_init_and_start()
                        NULL);
     
     // Start dps368 function with a 1 minute periode
-    k_timer_start(&dps368_timer, K_SECONDS(60), K_SECONDS(60));
+    k_timer_start(&dps368_timer, K_SECONDS(120), K_SECONDS(120));
     
     // Initialize dps368 workqueue item with associated function
     k_work_init(&dps368_work_item, trigger_dps368_value_gathering);

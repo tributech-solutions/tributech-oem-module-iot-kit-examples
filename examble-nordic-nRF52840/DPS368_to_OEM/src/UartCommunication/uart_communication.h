@@ -11,7 +11,6 @@
 #include <zephyr.h>
 #include <drivers/uart.h>
 
-#define BUF_SIZE 4096
 #define UART_RECEIVE_BUFFER_SIZE 4096
 extern char uart_receive_buf[UART_RECEIVE_BUFFER_SIZE];
 extern uint32_t uart_receive_index;

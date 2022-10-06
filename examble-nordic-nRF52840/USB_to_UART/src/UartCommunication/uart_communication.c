@@ -98,10 +98,18 @@ static void uart_interrupt_handler(const struct device *int_dev, void *user_data
 		sd->rx->len += data_length;
 
 		if (sd->rx->len > 0) {
+			// if ((sd->rx->len == UART_BUF_SIZE) ||
+			//    (sd->rx->buffer[sd->rx->len - 1] == '\n') ||
+			//    (sd->rx->buffer[sd->rx->len - 1] == '\r') ||
+			//    (sd->rx->buffer[sd->rx->len - 1] == '\0')) {
 			if ((sd->rx->len == UART_BUF_SIZE) ||
-			   (sd->rx->buffer[sd->rx->len - 1] == '\n') ||
-			   (sd->rx->buffer[sd->rx->len - 1] == '\r') ||
-			   (sd->rx->buffer[sd->rx->len - 1] == '\0')) {
+			   (sd->rx->buffer[sd->rx->len - 1] == '\n')) {
+				if(sd->rx->buffer[sd->rx->len - 1] == '\n' && sd->rx->buffer[sd->rx->len - 2] != '\r')
+				{
+					sd->rx->buffer[sd->rx->len - 1] = '\r';
+					sd->rx->buffer[sd->rx->len] = '\n';
+					sd->rx->len++;
+				}
 				k_fifo_put(peer_sd->fifo, sd->rx);
 				k_sem_give(&peer_sd->sem);
 
