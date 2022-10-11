@@ -558,6 +558,410 @@
       <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="135" height="20" x="10" y="65" horizontalAlignment="ALIGNMENT_RIGHT" value="event_timer"/>
     </children>
   </children>
+  <children xsi:type="pi:ContainerShape" visible="true" active="true">
+    <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0"/>
+    <properties key="APP_NAME_ID" value="SPI_MASTER/0"/>
+    <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="171" height="541" x="20" y="1236">
+      <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="2" transparency="0.0" width="131" height="541" x="20" style="//@styles.0/@styles.3" cornerHeight="5" cornerWidth="5"/>
+    </graphicsAlgorithm>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_transmit_buffer"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_std_tx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="70"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_fifo_transmit"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_tx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="110"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_receive_start"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_rx_start_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.4" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="130"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_std_receive"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_std_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.4" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="150"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_alt_receive"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_alt_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.4" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="170"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_fifo_std_receive"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="190"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_fifo_alt_receive"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_alt_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="210"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_dma_receive_end"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_dma_channel_rx_event"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.4" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="230"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_dma_transmit_end"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_dma_channel_tx_event"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.4" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="250"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="event_protocol"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_protocol_specfic_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="50"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="sclk_out_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_sclkoutpad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="275"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="mosi_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_0"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="295"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="miso_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_1"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="315"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="mosi/miso[2]_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_2"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="330"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="mosi/miso[3]_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_3"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="350"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="slave_select_0_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_0_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="375"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="slave_select_1_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_1_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="390"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="slave_select_2_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_2_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="410"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="slave_select_3_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_3_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="430"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="slave_select_4_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_4_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="450"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="slave_select_5_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_5_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="470"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="slave_select_6_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_6_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="490"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="slave_select_7_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_7_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="130" y="510"/>
+    </anchors>
+    <children visible="true">
+      <graphicsAlgorithm xsi:type="al:Polyline" lineStyle="UNSPECIFIED" style="//@styles.0">
+        <points x="20" y="40"/>
+        <points x="151" y="40"/>
+      </graphicsAlgorithm>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="131" height="20" x="20"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="129" height="20" x="2" style="//@styles.0/@styles.0" horizontalAlignment="ALIGNMENT_CENTER" value="SPI_MASTER"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="131" height="20" x="20" y="20"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="129" height="20" x="2" style="//@styles.0/@styles.1" horizontalAlignment="ALIGNMENT_CENTER" value="SPI_MASTER_0">
+          <properties key="AppInstanceLabel" value="SPI_MASTER_0"/>
+        </graphicsAlgorithm>
+      </children>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="event_transmit_buffer"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_std_tx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="50"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_std_tx_int"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="65" horizontalAlignment="ALIGNMENT_RIGHT" value="event_transmit_buffer"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="event_fifo_transmit"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_tx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="90"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_tx_int"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="105" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_fifo_transmit"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="event_receive_start"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_rx_start_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="110"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_rx_start_int"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.3" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="125" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_receive_start"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="event_std_receive"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_std_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="130"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_std_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.3" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="145" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_std_receive"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="event_alt_receive"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_alt_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="150"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_alt_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.3" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="165" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_alt_receive"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="event_fifo_std_receive"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="170"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="185" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_fifo_std_receive"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="event_fifo_alt_receive"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_alt_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="190"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_fifo_alt_rx_int"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="205" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_fifo_alt_receive"/>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="event_dma_receive_end"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_dma_channel_rx_event"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="210"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_dma_channel_rx_event"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.3" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="225" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_dma_receive_end"/>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="event_dma_transmit_end"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_dma_channel_tx_event"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="230"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_dma_channel_tx_event"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.3" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="245" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_dma_transmit_end"/>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="event_protocol"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_protocol_specfic_int"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="30"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_protocol_specfic_int"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="45" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="event_protocol"/>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="sclk_out_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_sclkoutpad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="255"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_sclkoutpad"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="270" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="sclk_out_pin"/>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="mosi_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_0"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="275"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_0"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="290" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="mosi_pin"/>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="miso_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_1"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="295"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_1"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="310" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="miso_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="mosi/miso[2]_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_2"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="310"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_2"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="125" height="20" x="20" y="325" horizontalAlignment="ALIGNMENT_RIGHT" value="mosi/miso[2]_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="mosi/miso[3]_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_3"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="330"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_mosi_3"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="345" horizontalAlignment="ALIGNMENT_RIGHT" value="mosi/miso[3]_pin"/>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="slave_select_0_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_0_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="355"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_0_pad"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="105" height="20" x="40" y="370" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="slave_select_0_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="slave_select_1_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_1_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="370"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_1_pad"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="105" height="20" x="40" y="385" horizontalAlignment="ALIGNMENT_RIGHT" value="slave_select_1_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="slave_select_2_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_2_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="390"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_2_pad"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="405" horizontalAlignment="ALIGNMENT_RIGHT" value="slave_select_2_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="slave_select_3_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_3_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="410"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_3_pad"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="425" horizontalAlignment="ALIGNMENT_RIGHT" value="slave_select_3_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="slave_select_4_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_4_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="430"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_4_pad"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="125" height="20" x="20" y="445" horizontalAlignment="ALIGNMENT_RIGHT" value="slave_select_4_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="slave_select_5_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_5_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="450"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_5_pad"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="105" height="20" x="40" y="465" horizontalAlignment="ALIGNMENT_RIGHT" value="slave_select_5_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="slave_select_6_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_6_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="470"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_6_pad"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="105" height="20" x="40" y="485" horizontalAlignment="ALIGNMENT_RIGHT" value="slave_select_6_pin"/>
+    </children>
+    <children active="true">
+      <properties key="SignalName" value="slave_select_7_pin"/>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_7_pad"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="490"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.3.26/app/SPI_MASTER/0/vs_spi_master_slave_select_7_pad"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="115" height="20" x="30" y="505" horizontalAlignment="ALIGNMENT_RIGHT" value="slave_select_7_pin"/>
+    </children>
+  </children>
+  <children xsi:type="pi:ContainerShape" visible="true" active="true">
+    <properties key="uri" value="http://resources/4.0.16/app/DIGITAL_IO/0"/>
+    <properties key="APP_NAME_ID" value="DIGITAL_IO/0"/>
+    <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="161" height="91" x="30" y="1817">
+      <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="2" transparency="0.0" width="121" height="91" x="20" style="//@styles.0/@styles.3" cornerHeight="5" cornerWidth="5"/>
+    </graphicsAlgorithm>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.7/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="pin"/>
+      <properties key="uri" value="http://resources/4.0.16/app/DIGITAL_IO/0/vs_digital_io_pad_pin"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="120" y="50"/>
+    </anchors>
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.7/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="hardware pin control"/>
+      <properties key="uri" value="http://resources/4.0.16/app/DIGITAL_IO/0/vs_digital_io_hwsel"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="120" y="70"/>
+    </anchors>
+    <children visible="true">
+      <graphicsAlgorithm xsi:type="al:Polyline" lineStyle="UNSPECIFIED" style="//@styles.0">
+        <points x="20" y="40"/>
+        <points x="141" y="40"/>
+      </graphicsAlgorithm>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="121" height="20" x="20"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="119" height="20" x="2" style="//@styles.0/@styles.0" horizontalAlignment="ALIGNMENT_CENTER" value="DIGITAL_IO"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="121" height="20" x="20" y="20"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="119" height="20" x="2" style="//@styles.0/@styles.1" horizontalAlignment="ALIGNMENT_CENTER" value="DIGITAL_IO_0">
+          <properties key="AppInstanceLabel" value="DIGITAL_IO_0"/>
+        </graphicsAlgorithm>
+      </children>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="pin"/>
+      <properties key="uri" value="http://resources/4.0.16/app/DIGITAL_IO/0/vs_digital_io_pad_pin"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="30"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.0.16/app/DIGITAL_IO/0/vs_digital_io_pad_pin"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="125" height="20" x="10" y="45" style="//@styles.0/@styles.2" horizontalAlignment="ALIGNMENT_RIGHT" value="pin"/>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="hardware pin control"/>
+      <properties key="uri" value="http://resources/4.0.16/app/DIGITAL_IO/0/vs_digital_io_hwsel"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="50"/>
+    </children>
+    <children>
+      <properties key="uri" value="http://resources/4.0.16/app/DIGITAL_IO/0/vs_digital_io_hwsel"/>
+      <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="105" height="20" x="30" y="65" horizontalAlignment="ALIGNMENT_RIGHT" value="hardware pin control"/>
+    </children>
+  </children>
   <styles background="//@colors.1" lineWidth="2" lineVisible="true" transparency="0.0" id="COMMON-VALUES" horizontalAlignment="UNSPECIFIED" verticalAlignment="UNSPECIFIED">
     <styles foreground="//@colors.2" lineStyle="UNSPECIFIED" filled="false" id="APP_NAME" font="//@fonts.0"/>
     <styles foreground="//@colors.2" lineStyle="UNSPECIFIED" filled="false" id="APP_INST_NAME" font="//@fonts.1"/>

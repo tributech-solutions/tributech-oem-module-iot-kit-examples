@@ -25,7 +25,6 @@ uint8_t parse_oem_response_save_configuration(char * data, uint16_t cmd_len)
 	jsmntok_t *t; 					// tokens
 	char * key_name;				// object key name
 	uint8_t length;					// length of key name
-	uint16_t r_cmd_len = 0;			// length of received command phrase like "GetId" r_cmd_len = 5
 	uint32_t received_transactionnr;// received transaction number
 
 	if (cmd_len > CONFIGURATION_SIZE)
@@ -95,10 +94,8 @@ uint8_t get_valueMetaDataId(char * stream_name, char * id)
 
 	jsmn_parser p;					// parser
 	jsmntok_t *t; 					// tokens
-	char operation[50];				// operation value
 	char * key_name;				// object key name
 	uint8_t length;					// length of key name
-	uint16_t r_cmd_len = 0;			// length of received command phrase like "GetId" r_cmd_len = 5
 	uint16_t object_stream_end_pos;				// end position of object stream
 	uint16_t array_streams_end_pos;				// end position of array streams
 	char id_temp[37];				// id temp

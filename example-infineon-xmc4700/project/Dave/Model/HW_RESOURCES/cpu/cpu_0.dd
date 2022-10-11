@@ -523,5 +523,70 @@
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="#0" description="interrupt disabled"/>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="#1" description="interrupt enabled."/>
   </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="USIC0_3_IRQHandler" URI="http://resources/48.0.0/peripheral/cpu/0/nvic/interrupt/87">
+    <resourcesList name="iser_setena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iser2/setena23"/>
+    <resourcesList name="icer_clrena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icer2/clrena23"/>
+    <resourcesList name="ispr_setpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ispr2/setpend23"/>
+    <resourcesList name="icpr_clrpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icpr2/clrpend23"/>
+    <resourcesList name="iabr_active" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iabr2/active23"/>
+    <resourcesList name="ipr_pri" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ipr21/pri_87"/>
+    <resourcesList name="signal_in" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/usic0_3_irqhandler"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="SETENA23" URI="http://resources/48.0.0/peripheral/cpu/0/nvic_iser2/setena23" value="0x00000000" toolTipHelpDescription="Interrupt set-enable bits" defaultValue="0x00000000" startPos="23" stopPos="23" accessPermission="rw" maxValue="1" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#0" description="interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#1" description="interrupt enabled."/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="USIC0_5_IRQHandler" URI="http://resources/48.0.0/peripheral/cpu/0/nvic/interrupt/89">
+    <resourcesList name="iser_setena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iser2/setena25"/>
+    <resourcesList name="icer_clrena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icer2/clrena25"/>
+    <resourcesList name="ispr_setpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ispr2/setpend25"/>
+    <resourcesList name="icpr_clrpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icpr2/clrpend25"/>
+    <resourcesList name="iabr_active" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iabr2/active25"/>
+    <resourcesList name="ipr_pri" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ipr22/pri_89"/>
+    <resourcesList name="signal_in" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/usic0_5_irqhandler"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="SETENA25" URI="http://resources/48.0.0/peripheral/cpu/0/nvic_iser2/setena25" value="0x00000000" toolTipHelpDescription="Interrupt set-enable bits" defaultValue="0x00000000" startPos="25" stopPos="25" accessPermission="rw" maxValue="1" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#0" description="interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#1" description="interrupt enabled."/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="USIC2_2_IRQHandler" URI="http://resources/48.0.0/peripheral/cpu/0/nvic/interrupt/98">
+    <resourcesList name="iser_setena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iser3/setena2"/>
+    <resourcesList name="icer_clrena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icer3/clrena2"/>
+    <resourcesList name="ispr_setpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ispr3/setpend2"/>
+    <resourcesList name="icpr_clrpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icpr3/clrpend2"/>
+    <resourcesList name="iabr_active" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iabr3/active2"/>
+    <resourcesList name="ipr_pri" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ipr24/pri_98"/>
+    <resourcesList name="signal_in" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/usic2_2_irqhandler"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="SETENA2" URI="http://resources/48.0.0/peripheral/cpu/0/nvic_iser3/setena2" value="0x00000000" toolTipHelpDescription="Interrupt set-enable bits" defaultValue="0x00000000" startPos="2" stopPos="2" accessPermission="rw" maxValue="1" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#0" description="interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#1" description="interrupt enabled."/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="GPDMA_IRQ" URI="http://resources/48.0.0/peripheral/cpu/0/nvic/interrupt/110">
+    <resourcesList name="iser_setena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iser3/setena14"/>
+    <resourcesList name="icer_clrena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icer3/clrena14"/>
+    <resourcesList name="ispr_setpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ispr3/setpend14"/>
+    <resourcesList name="icpr_clrpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icpr3/clrpend14"/>
+    <resourcesList name="iabr_active" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iabr3/active14"/>
+    <resourcesList name="ipr_pri" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ipr27/pri_110"/>
+    <resourcesList name="signal_in" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/gpdma1_0_irqhandler"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="SETENA1" URI="http://resources/48.0.0/peripheral/cpu/0/nvic_iser3/setena14" value="0x00000000" toolTipHelpDescription="Interrupt set-enable bits" defaultValue="0x00000000" startPos="14" stopPos="14" accessPermission="rw" maxValue="1" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#0" description="interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#1" description="interrupt enabled."/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="USIC2_3_IRQHandler" URI="http://resources/48.0.0/peripheral/cpu/0/nvic/interrupt/99">
+    <resourcesList name="iser_setena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iser3/setena3"/>
+    <resourcesList name="icer_clrena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icer3/clrena3"/>
+    <resourcesList name="ispr_setpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ispr3/setpend3"/>
+    <resourcesList name="icpr_clrpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icpr3/clrpend3"/>
+    <resourcesList name="iabr_active" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iabr3/active3"/>
+    <resourcesList name="ipr_pri" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ipr24/pri_99"/>
+    <resourcesList name="signal_in" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/usic2_3_irqhandler"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="SETENA3" URI="http://resources/48.0.0/peripheral/cpu/0/nvic_iser3/setena3" value="0x00000000" toolTipHelpDescription="Interrupt set-enable bits" defaultValue="0x00000000" startPos="3" stopPos="3" accessPermission="rw" maxValue="1" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#0" description="interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#1" description="interrupt enabled."/>
+  </provided>
   <addressBlock offset="0x0" size="0x1000" usage="registers"/>
 </ResourceModel:Peripheral>

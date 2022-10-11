@@ -16,6 +16,8 @@
 #include "i2c_master_ctrl.h"
 #include "base64.h"
 #include "tributech.h"
+#include "max31855_temp_sensor.h"
+
 
 /**
 
@@ -45,8 +47,6 @@ int main(void)
   char *base64_string_pressure;         // pointer to base64 string
   uint16_t base64_length;				// base64 length
   char * provide_values_message;		// provide values output message
-
-
 
   status = DAVE_Init();           /* Initialization of DAVE APPs  */
 
@@ -87,7 +87,6 @@ int main(void)
 
   while(1U)
   {
-
 	  if(USBD_VCOM_IsEnumDone() != 0)
 	  {
 		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -122,8 +121,12 @@ int main(void)
 		  else if(last_command_sent + 10 < get_time() && stream_ids_received && !disable_provide_values)
 		  {
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
-				// get  temperature and pressure
+				// get temperature and pressure from dps310
 				dps310_get_cont_results();
+
+				//++++++++++++++++++++++++++++++++++++++++++++++++++++
+				// get temperature from max31855
+				//get_max31855_temp(&SPI_MASTER_0, &DIGITAL_IO_0, &max31855_temp_external, &max31855_temp_internal);
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// increase transaction number
@@ -132,6 +135,7 @@ int main(void)
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// build base64 strings from values
 				base64_string_temperature = base64_encode(&dps310_status.temp_meas, sizeof(float), &base64_length);
+				//base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
 				base64_string_pressure = base64_encode(&dps310_status.pres_meas, sizeof(float), &base64_length);
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -14,6 +14,7 @@ To be able to use the Tributech OEM shield sample the user needs to assure that 
 * micro LTE SIM card
 * USB A to micro USB cable or 5V power adapter with micro USB
 * Username and Password for Tributech Web portal access
+* optional Adafruit MAX31855 + PT1000 temp sensor [MAX31855](https://www.digikey.at/de/products/detail/adafruit-industries-llc/269/4990749)
 
 ### Setup your development kit
 
@@ -35,6 +36,15 @@ When all steps are completed the green LED of the Tributech OEM shield will blin
 The blue LED will start blinking when a successful LTE CAT-M connection is established.
 
 When all the above steps are completed follow the instructions in [Verify Device2Cloud Communication](#verify-device2cloud-communication).
+
+### Optional Setup MAX31855 with external PT1000 temperature sensor
+
+1. Connect the max31855 board to the My-IoT-Adapter
+![Connect the max31855 board to the My-IoT-Adapter](images/adapter_max31855_1.jpg)
+![Connect the max31855 board to the My-IoT-Adapter](images/adapter_max31855_2.jpg)
+2. Code adapts
+![Code adapts max31855](images/code_adapts_max31855.png)
+
 
 ### Verify Device2Cloud Communication
 
