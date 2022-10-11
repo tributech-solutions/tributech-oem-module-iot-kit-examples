@@ -34,7 +34,7 @@ void main(void)
 
     LOG_INF("dev %p name %s\n", data.i2c_master, data.i2c_master->name);
     // This k_sleep is needed to allow the Tributech OEM module to initialize 
-    k_sleep(K_MSEC(10000));
+    k_sleep(K_MSEC(30000));
 
     while (1) 
     {

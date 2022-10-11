@@ -73,14 +73,17 @@ int main(void)
   init_usb_Connection();
   init_uart_connection();
 
-  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  // init i2c Interface
-  i2c_init();
+  if(!disable_provide_values)
+  {
+	  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  // init i2c Interface
+	  i2c_init();
 
 
-  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  // init dps310
-  dps310_init();
+  	  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  	  // init dps310
+  	  dps310_init();
+  }
 
   while(1U)
   {
@@ -92,18 +95,18 @@ int main(void)
 
 		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  // if no configuration received -> send getConfiguration command
-		  if (!configuration_received)
+		  if (!configuration_received && !disable_provide_values)// && !disable_provide_values)
 		  {
 			  if (last_command_sent + 10 < get_time())
 			  {
-				  uart_output(&UART_OEM,"{\"TransactionNr\": 1, \"Operation\": \"GetConfiguration\"}");
+				  uart_output(&UART_OEM,"{\"TransactionNr\": 1, \"Operation\": \"GetConfiguration\"}\r\n");
 				  get_config_transactionnr = 1;
 				  last_command_sent = get_time();
 			  }
 		  }
 		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  // configuration received -> parse ids
-		  else if (configuration_received && !stream_ids_received)
+		  else if (configuration_received && !stream_ids_received && !disable_provide_values)// && !disable_provide_values)
 		  {
 			  get_valueMetaDataId("Temperature", valuemetadataid_temperature);
 			  get_valueMetaDataId("Pressure", valuemetadataid_pressure);
