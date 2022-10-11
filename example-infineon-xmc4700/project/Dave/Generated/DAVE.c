@@ -91,6 +91,16 @@ __WEAK DAVE_STATUS_t DAVE_Init(void)
   {
 	 /**  Initialization of RTC APP instance RTC_0 */
 	 init_status = (DAVE_STATUS_t)RTC_Init(&RTC_0); 
+   } 
+  if (init_status == DAVE_STATUS_SUCCESS)
+  {
+	 /**  Initialization of SPI_MASTER APP instance SPI_MASTER_0 */
+	 init_status = (DAVE_STATUS_t)SPI_MASTER_Init(&SPI_MASTER_0); 
+   } 
+  if (init_status == DAVE_STATUS_SUCCESS)
+  {
+	 /**  Initialization of DIGITAL_IO APP instance DIGITAL_IO_0 */
+	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&DIGITAL_IO_0); 
    }  
   return init_status;
 } /**  End of function DAVE_Init */

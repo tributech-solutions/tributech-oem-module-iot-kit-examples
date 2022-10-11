@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Project MotherSystem_Version="" Name="XMC4700_USB_to_UART" Path="C:\Repos\tributech-oem-module-iot-kit-examples\IoT-KIT-Infineon-XMC47_RELAX_5V_AD_V1\XMC4700_USB_to_UART">
+<Project MotherSystem_Version="" Name="XMC4700_USB_to_UART" Path="C:\Repos\tributech-oem-module-iot-kit-examples_temp\example-infineon-xmc4700\project">
     <COMPILER>
         <Name>ARM_GCC_HOME</Name>
         <Version/>
@@ -37,6 +37,16 @@
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
+                <File_Name>digital_io.c</File_Name>
+                <Path>\Dave\Generated\DIGITAL_IO\digital_io.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>digital_io_conf.c</File_Name>
+                <Path>\Dave\Generated\DIGITAL_IO\digital_io_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
                 <File_Name>i2c_master.c</File_Name>
                 <Path>\Dave\Generated\I2C_MASTER\i2c_master.c</Path>
                 <Type>C File</Type>
@@ -54,6 +64,16 @@
             <Source_File>
                 <File_Name>rtc_conf.c</File_Name>
                 <Path>\Dave\Generated\RTC\rtc_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>spi_master.c</File_Name>
+                <Path>\Dave\Generated\SPI_MASTER\spi_master.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>spi_master_conf.c</File_Name>
+                <Path>\Dave\Generated\SPI_MASTER\spi_master_conf.c</Path>
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
@@ -154,6 +174,21 @@
                 <Type>H File</Type>
             </Header_File>
             <Header_File>
+                <File_Name>digital_io.h</File_Name>
+                <Path>\Dave\Generated\DIGITAL_IO\digital_io.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>digital_io_conf.h</File_Name>
+                <Path>\Dave\Generated\DIGITAL_IO\digital_io_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>digital_io_extern.h</File_Name>
+                <Path>\Dave\Generated\DIGITAL_IO\digital_io_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
                 <File_Name>i2c_master.h</File_Name>
                 <Path>\Dave\Generated\I2C_MASTER\i2c_master.h</Path>
                 <Type>H File</Type>
@@ -181,6 +216,21 @@
             <Header_File>
                 <File_Name>rtc_extern.h</File_Name>
                 <Path>\Dave\Generated\RTC\rtc_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>spi_master.h</File_Name>
+                <Path>\Dave\Generated\SPI_MASTER\spi_master.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>spi_master_conf.h</File_Name>
+                <Path>\Dave\Generated\SPI_MASTER\spi_master_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>spi_master_extern.h</File_Name>
+                <Path>\Dave\Generated\SPI_MASTER\spi_master_extern.h</Path>
                 <Type>H File</Type>
             </Header_File>
             <Header_File>
@@ -344,6 +394,11 @@
         <Path>\Libraries\OEMLib\USB_Communication</Path>
         <Path>\Libraries\OEMLib\Base64</Path>
         <Path>\Libraries\OEMLib\DPS310PressureSensor</Path>
+        <Path>\Libraries\OEMLib\Functions</Path>
+        <Path>\Libraries\OEMLib\I2C</Path>
+        <Path>\Libraries\OEMLib\JSMNParser</Path>
+        <Path>\Libraries\OEMLib\TributechLib</Path>
+        <Path>\Libraries\OEMLib\MAX31855TempSensor</Path>
     </Include_Path>
     <Preprocessor_Symbols>
         <Assembler_Symbol>XMC4700_F144x2048=</Assembler_Symbol>
