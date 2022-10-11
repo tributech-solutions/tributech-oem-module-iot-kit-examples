@@ -126,7 +126,7 @@ int main(void)
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// get temperature from max31855
-				get_max31855_temp(&SPI_MASTER_0, &DIGITAL_IO_0, &max31855_temp_external, &max31855_temp_internal);
+				//get_max31855_temp(&SPI_MASTER_0, &DIGITAL_IO_0, &max31855_temp_external, &max31855_temp_internal);
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// increase transaction number
@@ -134,8 +134,8 @@ int main(void)
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// build base64 strings from values
-				//base64_string_temperature = base64_encode(&dps310_status.temp_meas, sizeof(float), &base64_length);
-				base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
+				base64_string_temperature = base64_encode(&dps310_status.temp_meas, sizeof(float), &base64_length);
+				//base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
 				base64_string_pressure = base64_encode(&dps310_status.pres_meas, sizeof(float), &base64_length);
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
