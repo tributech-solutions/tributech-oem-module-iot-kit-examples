@@ -8,51 +8,6 @@
 #include <functions.h>
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// String To UpperCase
-char * to_upper_case(char * text)
-{
-	uint16_t i;
-
-	i=0;
-	while(i < strlen(text))
-	{
-		text[i] = (char) toupper((int)text[i]);
-	    i++;
-	}
-
-	return text;
-}
-
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// String To LowerCase
-char * to_lower_case(char * text)
-{
-	uint16_t i;
-
-	i=0;
-	while(i < strlen(text))
-	{
-		text[i] = (char) tolower((int)text[i]);
-	    i++;
-	}
-
-	return text;
-}
-
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// increase transaction number
-void increase_transaction_nr(void)
-{
-	transaction_nr_dec++;
-	if (transaction_nr_dec >= 1000000)
-	{
-		transaction_nr_dec = 0;
-	}
-	memset(transaction_nr_string,0x0,7);
-	sprintf(transaction_nr_string, "%"PRIu32"",transaction_nr_dec);
-}
-
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Get Time
 time_t get_time(void)
 {
@@ -71,17 +26,6 @@ void delay_ms(uint32_t ms)
 
 	while (now + ms > _msCounter)
 					__NOP();
-}
-
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// minimum of two uint32_t values
-uint32_t min2_uint32_t (uint32_t value1, uint32_t value2)
-{
-	if (value2 < value1)
-	{
-		return value2;
-	}
-	return value1;
 }
 
 
