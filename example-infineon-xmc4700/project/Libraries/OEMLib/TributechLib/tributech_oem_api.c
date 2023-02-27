@@ -1,6 +1,6 @@
 #define CONFIGURATION_SIZE 4096				// configuration size
 
-#include <tributech_oem_api.h>
+#include "tributech_oem_api.h"
 
 char configuration[CONFIGURATION_SIZE];		// received configuration
 bool configuration_received;				// bit if configuration still received
