@@ -45,7 +45,7 @@ int main(void)
 
   char *base64_string;      			// pointer to base64 string
   char * provide_values_message;		// provide values output message
-  char send_message[50] = "";
+  char get_config_message[50] = "";
   bool send_temperature_next = true;
 
   status = DAVE_Init();           /* Initialization of DAVE APPs  */
@@ -99,9 +99,8 @@ int main(void)
 		  {
 			  if (last_command_sent + 10 < get_time())
 			  {
-				  build_get_configuration(send_message,"1");
-				  //uart_output(&UART_OEM,"{\"TransactionNr\": 1, \"Operation\": \"GetConfiguration\"}\r\n");
-				  uart_output(&UART_OEM,send_message);
+				  build_get_configuration(get_config_message,"1");
+				  uart_output(&UART_OEM,get_config_message);
 				  get_config_transactionnr = 1;
 				  last_command_sent = get_time();
 			  }
@@ -137,9 +136,10 @@ int main(void)
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// build base64 strings from values and build send string
 				provide_values_message = calloc(500,sizeof(char));
+				base64_string = calloc(20,sizeof(char));
+
 				if (send_temperature_next)
 				{
-					base64_string = calloc(20,sizeof(char));
 					bintob64(base64_string,&dps310_status.temp_meas, sizeof(float));
 					//base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
 
@@ -149,8 +149,8 @@ int main(void)
 				}
 				else
 				{
-					base64_string = calloc(20,sizeof(char));
 					bintob64(base64_string,&dps310_status.pres_meas, sizeof(float));
+
 					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string,"0");
 
 					send_temperature_next = true;
