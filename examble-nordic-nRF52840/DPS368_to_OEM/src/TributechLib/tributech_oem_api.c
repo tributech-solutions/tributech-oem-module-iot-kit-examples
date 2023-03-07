@@ -52,7 +52,7 @@ uint8_t parse_oem_response_save_configuration(char * data, uint16_t cmd_len)
 		return false;
 	}
 
-	t = calloc(1024,sizeof(jsmntok_t));
+	t = k_calloc(1024,sizeof(jsmntok_t));
 
 	//+++++++++++++++++++++++++++++++++++++++++++
 	// Initial start token
@@ -68,7 +68,7 @@ uint8_t parse_oem_response_save_configuration(char * data, uint16_t cmd_len)
 	// invalid operation by less than 4 tokens
 	if(number_of_tokens < 4 || number_of_tokens > 1024)
 	{
-		free(t);
+		k_free(t);
 		return false;
 	}
 
@@ -77,7 +77,7 @@ uint8_t parse_oem_response_save_configuration(char * data, uint16_t cmd_len)
 	for(uint8_t i = 1; i<number_of_tokens; i++)
 	{
 		length = t[i].end-t[i].start;
-		key_name = calloc(length+1, sizeof(char));
+		key_name = k_calloc(length+1, sizeof(char));
 		memcpy(key_name, &data[t[i].start], length);
 
 		//+++++++++++++++++++++++++++++++++++++++
@@ -94,14 +94,14 @@ uint8_t parse_oem_response_save_configuration(char * data, uint16_t cmd_len)
 			memcpy(configuration,data,cmd_len);
 			configuration_received = true;
 
-			free(key_name);
-			free(t);
+			k_free(key_name);
+			k_free(t);
 			return true;
 		}
-		free(key_name);
+		k_free(key_name);
 	}
 
-	free(t);
+	k_free(t);
 
 	return false;
 }
@@ -120,7 +120,7 @@ uint8_t get_valueMetaDataId(char * stream_name, char * id)
 	char id_temp[37];					// id temp
 	char stream_name_temp[50];			// stream name temp
 
-	t = calloc(1024,sizeof(jsmntok_t));
+	t = k_calloc(1024,sizeof(jsmntok_t));
 
 	//+++++++++++++++++++++++++++++++++++++++++++
 	// Initial start token
@@ -136,7 +136,7 @@ uint8_t get_valueMetaDataId(char * stream_name, char * id)
 	// invalid operation by less than 4 tokens
 	if(number_of_tokens < 4 || number_of_tokens > 1024)
 	{
-		free(t);
+		k_free(t);
 		return false;
 	}
 
@@ -145,7 +145,7 @@ uint8_t get_valueMetaDataId(char * stream_name, char * id)
 	for(uint8_t j = 1; j<number_of_tokens; j++)
 	{
 		length = t[j].end-t[j].start;
-		key_name = calloc(length+1, sizeof(char));
+		key_name = k_calloc(length+1, sizeof(char));
 		memcpy(key_name, &configuration[t[j].start], length);
 
 		//+++++++++++++++++++++++++++++++++++++++
@@ -172,9 +172,9 @@ uint8_t get_valueMetaDataId(char * stream_name, char * id)
 						{
 							//++++++++++++++++++++++++++++++++++
 							// get object key name
-							free(key_name);
+							k_free(key_name);
 							length = t[j].end-t[j].start;
-							key_name = calloc(length+1, sizeof(char));
+							key_name = k_calloc(length+1, sizeof(char));
 							memcpy(key_name,&configuration[t[j].start],length);	// get object key name
 
 							//++++++++++++++++++++++++++++++++++
@@ -201,8 +201,8 @@ uint8_t get_valueMetaDataId(char * stream_name, char * id)
 								if (strcmp(stream_name_temp,stream_name) == 0 )
 								{
 									strcpy(id,id_temp);
-									free(key_name);
-									free(t);
+									k_free(key_name);
+									k_free(t);
 									return true;
 								}
 							}
@@ -211,9 +211,9 @@ uint8_t get_valueMetaDataId(char * stream_name, char * id)
 				}
 			}
 		}
-		free(key_name);
+		k_free(key_name);
 	}
-	free(t);
+	k_free(t);
 
 	return false;
 }

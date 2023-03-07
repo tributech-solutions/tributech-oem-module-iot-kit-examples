@@ -58,8 +58,8 @@ void main(void)
 
             //++++++++++++++++++++++++++++++++++++++++++++++++++++
 			// build base64 strings from values and build send string
-			provide_values_message = calloc(500,sizeof(char));
-            base64_string = calloc(20,sizeof(char));
+			provide_values_message = k_calloc(500,sizeof(char));
+            base64_string = k_calloc(20,sizeof(char));
 
             if(tmp_available)
             {
@@ -85,8 +85,8 @@ void main(void)
 
             k_sleep(K_MSEC(100));
 
-            free(base64_string);
-			free(provide_values_message);
+            k_free(base64_string);
+			k_free(provide_values_message);
 
         }
         if(new_uart_message)
