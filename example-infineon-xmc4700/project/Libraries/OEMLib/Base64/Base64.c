@@ -1,167 +1,165 @@
+
 /*
- * Base64.c
- *
- *  Created on: 17 Mar 2020
- *      Author: DanielHackl
- */
-#include <base64.h>
-#include <stdlib.h>
-#include "stdint.h"
-#include <DAVE.h>
+<https://github.com/rafagafe/base64>
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+  Copyright (c) 2016-2018 Rafa Garcia <rafagarcia77@gmail.com>.
+  Permission is hereby  granted, free of charge, to any  person obtaining a copy
+  of this software and associated  documentation files (the "Software"), to deal
+  in the Software  without restriction, including without  limitation the rights
+  to  use, copy,  modify, merge,  publish, distribute,  sublicense, and/or  sell
+  copies  of  the Software,  and  to  permit persons  to  whom  the Software  is
+  furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  THE SOFTWARE  IS PROVIDED "AS  IS", WITHOUT WARRANTY  OF ANY KIND,  EXPRESS OR
+  IMPLIED,  INCLUDING BUT  NOT  LIMITED TO  THE  WARRANTIES OF  MERCHANTABILITY,
+  FITNESS FOR  A PARTICULAR PURPOSE AND  NONINFRINGEMENT. IN NO EVENT  SHALL THE
+  AUTHORS  OR COPYRIGHT  HOLDERS  BE  LIABLE FOR  ANY  CLAIM,  DAMAGES OR  OTHER
+  LIABILITY, WHETHER IN AN ACTION OF  CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+*/
+
+#include "base64.h"
+
+/** Escape values. */
+enum special_e {
+    notabase64 = 64, /**< Value to return when a non base64 digit is found. */
+    terminator = 65, /**< Value to return when the character '=' is found.  */
+};
+
+/** Lookup table that converts a base64 digit to integer. */
+static char const digittobin[] = {
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 62, 64, 64, 64, 63,
+    52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 64, 64, 64, 65, 64, 64,
+    64,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 64, 64, 64, 64, 64,
+    64, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+    64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64
+};
 
 
-const static char b64[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" ;
-const static int b64invs[] = { 62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58,
-	59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5,
-	6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-	21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28,
-	29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
-	43, 44, 45, 46, 47, 48, 49, 50, 51 };
+/* Convert a base64 null-terminated string to binary format.*/
+void* b64tobin( void* dest, char const* src ) {
+    unsigned char const* s = (unsigned char*)src;
+    char* p = dest;
+    for(;;) {
 
+        int const a = digittobin[ *s ];
+        if ( a == notabase64 ) return p;
+        if ( a == terminator ) return p;
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Base64 Encode
-char* base64_encode( const void* binaryData, uint16_t len, uint16_t *flen )
-{
-  const unsigned char* bin = (const unsigned char*) binaryData ;
-  char * result;
+        int const b = digittobin[ *++s ];
+        if ( b == notabase64 ) return 0;
+        if ( b == terminator ) return 0;
 
-  int rc = 0 ; // result counter
-  int byteNo ; // I need this after the loop
+        *p++ = ( a << 2u ) | ( b >> 4u );
 
-  int modulusLen = len % 3 ;
-  int pad = ((modulusLen&1)<<1) + ((modulusLen&2)>>1) ; // 2 gives 1 and 1 gives 2, but 0 gives 0.
+        int const c = digittobin[ *++s ];
+        if ( c == notabase64 ) return 0;
 
-  *flen = 4*(len + pad)/3 ;
-  result = (char*) calloc( *flen + 1,sizeof(char) ) ; // and one for the null
-  if( !result )
-  {
-//    puts( "ERROR: base64 could not allocate enough memory." ) ;
-//    puts( "I must stop because I could not get enough" ) ;
-    return NULL;
-  }
+        int const d = digittobin[ *++s ];
+        if ( d == notabase64 ) return 0;
+        if ( c == terminator ) {
+            if ( d != terminator ) return 0;
+            return p;
+        }
 
-  for( byteNo = 0 ; byteNo <= len-3 ; byteNo+=3 )
-  {
-    unsigned char BYTE0=bin[byteNo];
-    unsigned char BYTE1=bin[byteNo+1];
-    unsigned char BYTE2=bin[byteNo+2];
-    result[rc++]  = b64[ BYTE0 >> 2 ] ;
-    result[rc++]  = b64[ ((0x3&BYTE0)<<4) + (BYTE1 >> 4) ] ;
-    result[rc++]  = b64[ ((0x0f&BYTE1)<<2) + (BYTE2>>6) ] ;
-    result[rc++]  = b64[ 0x3f&BYTE2 ] ;
-  }
+        *p++ = ( b << 4u ) | ( c >> 2u );
 
-  if( pad==2 )
-  {
-	result[rc++] = b64[ bin[byteNo] >> 2 ] ;
-	result[rc++] = b64[ (0x3&bin[byteNo])<<4 ] ;
-	result[rc++] = '=';
-	result[rc++] = '=';
-  }
-  else if( pad==1 )
-  {
-	result[rc++]  = b64[ bin[byteNo] >> 2 ] ;
-	result[rc++]  = b64[ ((0x3&bin[byteNo])<<4)   +   (bin[byteNo+1] >> 4) ] ;
-	result[rc++]  = b64[ (0x0f&bin[byteNo+1])<<2 ] ;
-	result[rc++] = '=';
-  }
+        if ( d == terminator ) return p;
 
-  result[rc]=0; // NULL TERMINATOR! ;)
-  return result;
+        *p++ = ( c << 6u ) | ( d >> 0u );
+        ++s;
+    }
+
+    return p;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Decode Size
-size_t b64_decoded_size(const char *in)
-{
-	size_t len;
-	size_t ret;
-	size_t i;
+/** Lookup table that converts a integer to base64 digit. */
+static char const bintodigit[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                 "abcdefghijklmnopqrstuvwxyz"
+                                 "0123456789"
+                                 "+/";
 
-	if (in == NULL)
-		return 0;
-
-	len = strlen(in);
-
-	ret = len / 4 * 3;
-
-	for (i=len; i-->0; ) {
-		if (in[i] == '=') {
-			ret--;
-		} else {
-			break;
-		}
-	}
-
-	return ret;
+/** Get the first base 64 digit of a block of 4.
+  * @param a The first byte of the source block of 3.
+  * @return A base 64 digit. */
+static int get0( int a ) {
+    int const index = a >> 2u;
+    return bintodigit[ index ];
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Generate decode table
-void b64_generate_decode_table()
-{
-	int    inv[80];
-	size_t i;
-
-	memset(inv, -1, sizeof(inv));
-	for (i=0; i<sizeof(b64)-1; i++) {
-		inv[b64[i]-43] = i;
-	}
+/** Get the second base 64 digit of a block of 4.
+  * @param a The first byte of the source block of 3.
+  * @param b The second byte of the source block of 3.
+  * @return A base 64 digit. */
+static int get1( int a, int b ) {
+    int const indexA = ( a & 3 ) << 4u;
+    int const indexB = b >> 4u;
+    int const index  = indexA | indexB;
+    return bintodigit[ index ];
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// check if char is valid
-int b64_is_valid_char(char c)
-{
-	if (c >= '0' && c <= '9')
-		return 1;
-	if (c >= 'A' && c <= 'Z')
-		return 1;
-	if (c >= 'a' && c <= 'z')
-		return 1;
-	if (c == '+' || c == '/' || c == '=')
-		return 1;
-	return 0;
+/** Get the third base 64 digit of a block of 4.
+  * @param b The second byte of the source block of 3.
+  * @param c The third byte of the source block of 3.
+  * @return A base 64 digit. */
+static unsigned int get2( unsigned int b, unsigned int c ) {
+    int const indexB = ( b & 15 ) << 2u;
+    int const indexC = c >> 6u;
+    int const index  = indexB | indexC;
+    return bintodigit[ index ];
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Decode
-int b64_decode(const char *in, unsigned char *out, size_t outlen)
-{
-	size_t len;
-	size_t i;
-	size_t j;
-	int    v;
-
-	if (in == NULL || out == NULL)
-		return 0;
-
-	len = strlen(in);
-	if (outlen < b64_decoded_size(in) || len % 4 != 0)
-		return 0;
-
-	for (i=0; i<len; i++) {
-		if (!b64_is_valid_char(in[i])) {
-			return 0;
-		}
-	}
-
-	for (i=0, j=0; i<len; i+=4, j+=3) {
-		v = b64invs[in[i]-43];
-		v = (v << 6) | b64invs[in[i+1]-43];
-		v = in[i+2]=='=' ? v << 6 : (v << 6) | b64invs[in[i+2]-43];
-		v = in[i+3]=='=' ? v << 6 : (v << 6) | b64invs[in[i+3]-43];
-
-		out[j] = (v >> 16) & 0xFF;
-		if (in[i+2] != '=')
-			out[j+1] = (v >> 8) & 0xFF;
-		if (in[i+3] != '=')
-			out[j+2] = v & 0xFF;
-	}
-
-	return 1;
+/** Get the fourth base 64 digit of a block of 4.
+  * @param c The third byte of the source block of 3.
+  * @return A base 64 digit. */
+static int get3( int c ) {
+    int const index = c & 0x3f;
+    return bintodigit[ index ];
 }
 
+/* Convert a binary memory block in a base64 null-terminated string. */
+char* bintob64( char* dest, void const* src, size_t size ) {
 
+    typedef struct { unsigned char a; unsigned char b; unsigned char c; } block_t;
+    block_t const* block = (block_t*)src;
+    for( ; size >= sizeof( block_t ); size -= sizeof( block_t ), ++block ) {
+        *dest++ = get0( block->a );
+        *dest++ = get1( block->a, block->b );
+        *dest++ = get2( block->b, block->c );
+        *dest++ = get3( block->c );
+    }
 
+    if ( !size ) goto final;
+
+    *dest++ = get0( block->a );
+    if ( !--size ) {
+        *dest++ = get1( block->a, 0 );
+        *dest++ = '=';
+        *dest++ = '=';
+        goto final;
+    }
+
+    *dest++ = get1( block->a, block->b );
+    *dest++ = get2( block->b, 0 );
+    *dest++ = '=';
+
+  final:
+    *dest = '\0';
+    return dest;
+}

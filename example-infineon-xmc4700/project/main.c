@@ -10,12 +10,12 @@
 
 #include <DAVE.h>                 //Declarations from DAVE Code Generation (includes SFR declaration)
 #include <functions.h>
+#include <tributech_oem_api.h>
 #include "usb_communication.h"
 #include "uart_communication.h"
 #include "dps310_ctrl.h"
 #include "i2c_master_ctrl.h"
 #include "base64.h"
-#include "tributech.h"
 #include "max31855_temp_sensor.h"
 
 
@@ -43,10 +43,10 @@ int main(void)
   char valuemetadataid_temperature[37] = "";	// ValueMetaDataId 1
   char valuemetadataid_pressure[37] = "";		// ValueMetaDataId 2
 
-  char *base64_string_temperature;      // pointer to base64 string
-  char *base64_string_pressure;         // pointer to base64 string
-  uint16_t base64_length;				// base64 length
+  char *base64_string;      			// pointer to base64 string
   char * provide_values_message;		// provide values output message
+  char get_config_message[50] = "";
+  bool send_temperature_next = true;
 
   status = DAVE_Init();           /* Initialization of DAVE APPs  */
 
@@ -99,7 +99,8 @@ int main(void)
 		  {
 			  if (last_command_sent + 10 < get_time())
 			  {
-				  uart_output(&UART_OEM,"{\"TransactionNr\": 1, \"Operation\": \"GetConfiguration\"}\r\n");
+				  build_get_configuration(get_config_message,"1");
+				  uart_output(&UART_OEM,get_config_message);
 				  get_config_transactionnr = 1;
 				  last_command_sent = get_time();
 			  }
@@ -133,15 +134,27 @@ int main(void)
 				increase_transaction_nr();
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
-				// build base64 strings from values
-				base64_string_temperature = base64_encode(&dps310_status.temp_meas, sizeof(float), &base64_length);
-				//base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
-				base64_string_pressure = base64_encode(&dps310_status.pres_meas, sizeof(float), &base64_length);
-
-				//++++++++++++++++++++++++++++++++++++++++++++++++++++
-				// build provide values message
+				// build base64 strings from values and build send string
 				provide_values_message = calloc(500,sizeof(char));
-				sprintf(provide_values_message, "{\"TransactionNr\": %s,\"Operation\": \"ProvideValues\",\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": 0,\"Value\": \"%s\"}],\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": 0,\"Value\": \"%s\"}]}\r\n" , transaction_nr_string, valuemetadataid_temperature, base64_string_temperature, valuemetadataid_pressure, base64_string_pressure);
+				base64_string = calloc(20,sizeof(char));
+
+				if (send_temperature_next)
+				{
+					bintob64(base64_string,&dps310_status.temp_meas, sizeof(float));
+					//base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
+
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_temperature,base64_string,"0");
+
+					send_temperature_next = false;
+				}
+				else
+				{
+					bintob64(base64_string,&dps310_status.pres_meas, sizeof(float));
+
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string,"0");
+
+					send_temperature_next = true;
+				}
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// output via usb
@@ -153,8 +166,7 @@ int main(void)
 				uart_output(&UART_OEM,provide_values_message);
 
 				delay_ms(100);
-				free(base64_string_temperature);
-				free(base64_string_pressure);
+				free(base64_string);
 				free(provide_values_message);
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++

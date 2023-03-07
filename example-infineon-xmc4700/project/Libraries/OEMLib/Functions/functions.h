@@ -15,29 +15,18 @@
 #include <inttypes.h>
 #include <dave.h>
 
-uint32_t transaction_nr_dec;	// transaction number decimal
-char transaction_nr_string[7];	// transaction number string
 
 uint32_t _msCounter;
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// String To LowerCase and UpperCase
-char * to_lower_case(char * text);
-char * to_upper_case(char * text);
-
+// delay ms
 void delay_ms(uint32_t ms);
-
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Get Time
 time_t get_time(void);
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// increase transaction number
-void increase_transaction_nr(void);
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// minimum of two uint32_t values
-uint32_t min2_uint32_t (uint32_t value1, uint32_t value2);
+
 
 #endif

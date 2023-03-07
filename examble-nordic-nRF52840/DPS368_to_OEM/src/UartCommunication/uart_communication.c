@@ -9,7 +9,6 @@
 #include <uart_communication.h>
 #include <zephyr.h>
 #include <logging/log.h>
-#include <parse_and_send.h>
 #include <string.h>
 
 const struct device *uart;

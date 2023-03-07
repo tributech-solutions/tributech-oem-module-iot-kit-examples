@@ -5,14 +5,17 @@
 #include <Adafruit_DPS310.h>
 #include "base64.hpp"
 
+extern "C"{
+  #include "tributech_oem_api.h"
+}
+
 int counter;
-int transaction_number =  0;
 float temperature_previous;
 float pressure_previous;
 
 char base64_string[50]; 
-char valuemetadataid_temperature[37] = "fd54f5ca-15c9-4e01-b4b3-4247198a846c"; 
-char valuemetadataid_pressure[37] = "4e8e64f4-5439-4676-85c5-117280901bc0";
+char valuemetadataid_temperature[37] = "3b619323-7a61-465b-88df-24297efd5dda"; 
+char valuemetadataid_pressure[37] = "dbc298ea-f9b2-4daf-a93b-5a891fd4ddc1";
 char provide_values_message[500];
 
 Adafruit_DPS310 dps;
@@ -70,12 +73,8 @@ void loop()
   {
     encode_base64((char *) &temp_event.temperature, 4, base64_string);
 
-    transaction_number += 1;
-    if (transaction_number > 3000)
-    {
-      transaction_number = 1;
-    }
-    sprintf(provide_values_message, "{\"TransactionNr\": %d,\"Operation\": \"ProvideValues\",\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": 0,\"Value\": \"%s\"}]}\r\n" , transaction_number, valuemetadataid_temperature, base64_string);
+    increase_transaction_nr();
+    build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_temperature,base64_string,"0");
     Serial.println(provide_values_message);
 
     temperature_previous = temp_event.temperature;
@@ -88,12 +87,8 @@ void loop()
   {
     encode_base64((char *) &pressure_event.pressure, 4, base64_string);
 
-    transaction_number += 1;
-    if (transaction_number > 3000)
-    {
-      transaction_number = 1;
-    }
-    sprintf(provide_values_message, "{\"TransactionNr\": %d,\"Operation\": \"ProvideValues\",\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": 0,\"Value\": \"%s\"}]}\r\n" , transaction_number, valuemetadataid_pressure, base64_string);
+    increase_transaction_nr();
+    build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string,"0");
     Serial.println(provide_values_message);
 
     pressure_previous = pressure_event.pressure;
