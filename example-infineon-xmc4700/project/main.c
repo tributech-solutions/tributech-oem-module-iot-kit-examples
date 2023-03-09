@@ -38,15 +38,31 @@ int main(void)
 {
   DAVE_STATUS_t status;
   time_t last_command_sent;
-  bool disable_provide_values;
-  bool stream_ids_received;
-  char valuemetadataid_temperature[37] = "";	// ValueMetaDataId 1
-  char valuemetadataid_pressure[37] = "";		// ValueMetaDataId 2
+  bool disable_provide_values = false;
+  bool mode_sending_with_break = false;
+  bool stream_ids_received = false;
+  char valuemetadataid_float[37] = "";
+  char valuemetadataid_double[37] = "";
+  char valuemetadataid_int32[37] = "";
+  char valuemetadataid_int64[37] = "";
+  char valuemetadataid_step[37] = "";
+  char valuemetadataid_pmin[37] = "";
+  char valuemetadataid_pmax[37] = "";
 
   char *base64_string;      			// pointer to base64 string
   char * provide_values_message;		// provide values output message
   char get_config_message[50] = "";
-  bool send_temperature_next = true;
+  float float_value = 0;
+  float float_step_value = 0;
+  float float_pmin_value = 0;
+  float float_pmax_value = 0;
+  double double_value = 0;
+  int32_t int32_value = 0;
+  int64_t int64_value = 0;
+  int send_index = 0;
+  uint32_t break_counter = 0;
+  bool sending_break = false;
+  time_t last_time;
 
   status = DAVE_Init();           /* Initialization of DAVE APPs  */
 
@@ -66,13 +82,14 @@ int main(void)
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // The following boolean disables the provide values function.
   // This means that the sensor values from the DPS368 are not used anymore and the user is able to send data to the OEm via the  COM port.
-  disable_provide_values = true; 		// true for linking
+  disable_provide_values = false; 		// true for linking
+  mode_sending_with_break = false;		// true for sending with break
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // init usb and uart interface
   init_usb_Connection();
   init_uart_connection();
-
+  /*
   if(!disable_provide_values)
   {
 	  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -84,11 +101,25 @@ int main(void)
   	  // init dps310
   	  dps310_init();
   }
-
+  */
   while(1U)
   {
 	  if(USBD_VCOM_IsEnumDone() != 0)
 	  {
+		  if (mode_sending_with_break)
+		  {
+			  if (last_time != get_time())	// every second
+			  {
+				  break_counter = break_counter + 1;
+				  last_time = get_time();
+			  }
+
+			  if (break_counter > 3600)		// break after 1h
+			  {
+				  break_counter = 0;
+				  sending_break = !sending_break;
+			  }
+		  }
 		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  // get usb input
 		  wait_for_input();
@@ -109,52 +140,86 @@ int main(void)
 		  // configuration received -> parse ids
 		  else if (configuration_received && !stream_ids_received && !disable_provide_values)// && !disable_provide_values)
 		  {
-			  get_valueMetaDataId("Temperature", valuemetadataid_temperature);
-			  get_valueMetaDataId("Pressure", valuemetadataid_pressure);
+			  get_valueMetaDataId("Float Stream", valuemetadataid_float);
+			  get_valueMetaDataId("Double Stream", valuemetadataid_double);
+			  get_valueMetaDataId("INT32 Stream", valuemetadataid_int32);
+			  get_valueMetaDataId("INT64 Stream", valuemetadataid_int64);
+			  get_valueMetaDataId("STEP Stream", valuemetadataid_step);
+			  get_valueMetaDataId("PMIN Stream", valuemetadataid_pmin);
+			  get_valueMetaDataId("PMAX Stream", valuemetadataid_pmax);
 
-			  if(strcmp(valuemetadataid_temperature,"") != 0 && strcmp(valuemetadataid_pressure,"") != 0)
+			  if(strcmp(valuemetadataid_float,"") != 0 || strcmp(valuemetadataid_double,"") != 0)
 			  {
 				  stream_ids_received = true;
 			  }
 		  }
 		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  // ids received -> publish values
-		  else if(last_command_sent + 10 < get_time() && stream_ids_received && !disable_provide_values)
+		  else if(last_command_sent + 10 < get_time() && stream_ids_received && !disable_provide_values && !sending_break)
 		  {
-				//++++++++++++++++++++++++++++++++++++++++++++++++++++
-				// get temperature and pressure from dps310
-				dps310_get_cont_results();
-
-				//++++++++++++++++++++++++++++++++++++++++++++++++++++
-				// get temperature from max31855
-				//get_max31855_temp(&SPI_MASTER_0, &DIGITAL_IO_0, &max31855_temp_external, &max31855_temp_internal);
-
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// increase transaction number
 				increase_transaction_nr();
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// build base64 strings from values and build send string
-				provide_values_message = calloc(500,sizeof(char));
 				base64_string = calloc(20,sizeof(char));
+				provide_values_message = calloc(500,sizeof(char));
 
-				if (send_temperature_next)
+				send_index++;
+				if (send_index > 7)
 				{
-					bintob64(base64_string,&dps310_status.temp_meas, sizeof(float));
-					//base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
-
-					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_temperature,base64_string,"0");
-
-					send_temperature_next = false;
+					send_index = 1;
 				}
-				else
+
+				if (send_index == 1 && strcmp(valuemetadataid_float,"") != 0)
 				{
-					bintob64(base64_string,&dps310_status.pres_meas, sizeof(float));
-
-					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string,"0");
-
-					send_temperature_next = true;
+					float_value = float_value + 0.5;
+					bintob64(base64_string,&float_value, sizeof(float));
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_float,base64_string,"0");
 				}
+				else if (send_index == 2 && strcmp(valuemetadataid_double,"") != 0)
+				{
+					double_value = double_value + 0.5;
+
+					bintob64(base64_string,&double_value, sizeof(double));
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_double,base64_string,"0");
+				}
+
+				else if (send_index == 3 && strcmp(valuemetadataid_int32,"") != 0)
+				{
+					int32_value++;
+
+					bintob64(base64_string,&int32_value, sizeof(int32_t));
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_int32,base64_string,"0");
+				}
+
+				else if (send_index == 4 && strcmp(valuemetadataid_int64,"") != 0)
+				{
+					int64_value++;
+
+					bintob64(base64_string,&int64_value, sizeof(int64_t));
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_int64,base64_string,"0");
+				}
+				else if (send_index == 5 && strcmp(valuemetadataid_step,"") != 0)
+				{
+					float_step_value = float_step_value + 0.5;
+					bintob64(base64_string,&float_step_value, sizeof(float));
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_step,base64_string,"0");
+				}
+				else if (send_index == 6 && strcmp(valuemetadataid_pmin,"") != 0)
+				{
+					float_pmin_value = float_pmin_value + 0.5;
+					bintob64(base64_string,&float_pmin_value, sizeof(float));
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pmin,base64_string,"0");
+				}
+				else if (send_index == 7 && strcmp(valuemetadataid_pmax,"") != 0)
+				{
+					float_pmax_value = float_pmax_value + 0.5;
+					bintob64(base64_string,&float_pmax_value, sizeof(float));
+					build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pmax,base64_string,"0");
+				}
+
 
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++
 				// output via usb

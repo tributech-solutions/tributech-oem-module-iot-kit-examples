@@ -1,0 +1,302 @@
+{
+  "digitalTwinsFileInfo": {
+    "fileVersion": "1.0.0"
+  },
+  "digitalTwinsGraph": {
+    "digitalTwins": [
+      {
+        "$dtId": "$$root_uuid$$",
+        "$etag": "36f9cf36-15e3-072a-a938-5a17b1007108",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:device:emb;1"
+        },
+        "Name": "OEM Daniel",
+        "PublicKey": "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAkhPe4zO3x0bwOKGzsYZup35KpS+33ZVnn30Ek9ecDgTRhHlZf3N2\n+Axp9/dye5ud/33xYmZBZcS/6Zji0jl8qjYiCPNYeG2ZIvPRuRzaV2nFlKlBFeKU\nUPwFZBd4r5nMTPcAu2Ph5t7AfLRXEepdQ2qy6VoHYQ6qxX+WD+nJEeLoNts95Jpj\nU84Po7ZoE4nIO/bKchGILmy/NAseQQgvy03vx/gtWaXKQDUAYccv5ws1PjKMbKq5\nNB96bEd0YuO1W15drAR8uPETIHqt4SjpoO1NqV5hNyZN+tnyLzVGNbTfiP9qpFVw\nXxQkMfzaE09jfKIqbQ4J2BHGIcCG0+sXkwIDAQAB\n-----END RSA PUBLIC KEY-----",
+        "SoftwareVersion": "1.3",
+        "HardwareVersion": "1.1",
+        "ProofKind": "SHA256_RSA2048_PKCS1",
+        "KeyStorageType": "OPTIGA_TRUST_M",
+        "MQTTBroker": "demeter-mqtt.dev-y.dataspace-node.com",
+        "APN": "",
+        "ConnectivityTechnology": "Auto"
+      },
+      {
+        "$dtId": "$$uuid1$$",
+        "$etag": "635f2a7d-2764-6535-22e0-3285e300b8a7",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:source:emb;1"
+        },
+        "Name": "Source 1"
+      },
+      {
+        "$dtId": "$$uuid2$$",
+        "$etag": "592d77e1-b0f4-7798-380e-9348c1677d93",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:stream:emb;1"
+        },
+        "Name": "Float Stream",
+        "Unit": "",
+        "Encoding": "FLOAT",
+        "MerkleTreeDepth": 3,
+        "MerkleTreeTimeout": 3600,
+        "SubmissionInterval": 3600
+      },
+      {
+        "$dtId": "$$uuid3$$",
+        "$etag": "13d47e11-599f-72d0-59a3-12a71be7e847",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:options:valuechange;1"
+        },
+        "PMIN": 1,
+        "PMAX": 3600,
+        "ST": 0.1
+      },
+      {
+        "$dtId": "$$uuid4$$",
+        "$etag": "002959be-fc41-bc14-a762-749b04432125",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:stream:emb;1"
+        },
+        "Name": "Double Stream",
+        "Unit": "",
+        "Encoding": "DOUBLE",
+        "MerkleTreeDepth": 3,
+        "MerkleTreeTimeout": 3600,
+        "SubmissionInterval": 3600
+      },
+      {
+        "$dtId": "$$uuid5$$",
+        "$etag": "30280200-c70b-d253-45fc-a82cc54b53b5",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:options:valuechange;1"
+        },
+        "PMIN": 1,
+        "PMAX": 3600,
+        "ST": 0.1
+      },
+      {
+        "$dtId": "$$uuid6$$",
+        "$etag": "4a4eface-4b90-cc2d-660c-bca56a023afe",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:stream:emb;1"
+        },
+        "Name": "INT32 Stream",
+        "Unit": "",
+        "Encoding": "INT32",
+        "MerkleTreeDepth": 3,
+        "MerkleTreeTimeout": 3600,
+        "SubmissionInterval": 3600
+      },
+      {
+        "$dtId": "$$uuid7$$",
+        "$etag": "39ad793a-bb05-7c69-6db8-706ca43db421",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:options:valuechange;1"
+        },
+        "PMIN": 1,
+        "PMAX": 3600,
+        "ST": 0.1
+      },
+      {
+        "$dtId": "$$uuid8$$",
+        "$etag": "6536ce41-ed72-485a-1e7b-f24d682b1548",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:stream:emb;1"
+        },
+        "Name": "INT64 Stream",
+        "Unit": "",
+        "Encoding": "INT64",
+        "MerkleTreeDepth": 3,
+        "MerkleTreeTimeout": 3600,
+        "SubmissionInterval": 3600
+      },
+      {
+        "$dtId": "$$uuid9$$",
+        "$etag": "77237d9a-e739-6d5e-9c05-3e20be08e4f9",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:options:valuechange;1"
+        },
+        "PMIN": 1,
+        "PMAX": 3600,
+        "ST": 0.1
+      },
+      {
+        "$dtId": "$$uuid10$$",
+        "$etag": "1030054f-15ea-078b-28e7-3a19d18acc96",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:stream:emb;1"
+        },
+        "Name": "STEP Stream",
+        "Unit": "",
+        "Encoding": "FLOAT",
+        "MerkleTreeDepth": 3,
+        "MerkleTreeTimeout": 3600,
+        "SubmissionInterval": 3600
+      },
+      {
+        "$dtId": "$$uuid11$$",
+        "$etag": "4345af29-9408-42e4-8877-87d3272372db",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:options:valuechange;1"
+        },
+        "PMIN": 1,
+        "PMAX": 3600,
+        "ST": 10
+      },
+      {
+        "$dtId": "$$uuid12$$",
+        "$etag": "5a167f03-04f8-606b-3e79-d9be10335a87",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:stream:emb;1"
+        },
+        "Name": "PMIN Stream",
+        "Unit": "",
+        "Encoding": "FLOAT",
+        "MerkleTreeDepth": 3,
+        "MerkleTreeTimeout": 3600,
+        "SubmissionInterval": 3600
+      },
+      {
+        "$dtId": "$$uuid13$$",
+        "$etag": "e5276fd4-7115-e7bd-c309-33a839fe1a4b",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:options:valuechange;1"
+        },
+        "PMIN": 600,
+        "PMAX": 3600,
+        "ST": 0.1
+      },
+      {
+        "$dtId": "$$uuid14$$",
+        "$etag": "e987ddb7-742d-0318-12dc-ebf06880ba3b",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:stream:emb;1"
+        },
+        "Name": "PMAX Stream",
+        "Unit": "",
+        "Encoding": "FLOAT",
+        "MerkleTreeDepth": 3,
+        "MerkleTreeTimeout": 3600,
+        "SubmissionInterval": 600
+      },
+      {
+        "$dtId": "$$uuid15$$",
+        "$etag": "3f7c7458-2458-2686-80b4-27602b0e380b",
+        "$metadata": {
+          "$model": "dtmi:io:tributech:options:valuechange;1"
+        },
+        "PMIN": 1,
+        "PMAX": 600,
+        "ST": 1000
+      }
+    ],
+    "relationships": [
+      {
+        "$relationshipId": "25ff00f1-d8b0-6a3c-5b60-d90e4ecb4c63",
+        "$etag": "c1650bcf-954c-9321-2ce9-11efabfa084b",
+        "$sourceId": "$$root_uuid$$",
+        "$targetId": "$$uuid1$$",
+        "$relationshipName": "Sources"
+      },
+      {
+        "$relationshipId": "707fff60-32a2-516f-4fdc-445617fceda3",
+        "$etag": "c13d5ec1-6535-911d-8569-4e88873d2124",
+        "$sourceId": "$$uuid1$$",
+        "$targetId": "$$uuid2$$",
+        "$relationshipName": "Streams"
+      },
+      {
+        "$relationshipId": "35a688c5-a97b-767a-28ac-f3b3ad1a39ca",
+        "$etag": "e7d087e3-1dde-4254-1e8b-bdecb7a56859",
+        "$sourceId": "$$uuid2$$",
+        "$targetId": "$$uuid3$$",
+        "$relationshipName": "Options"
+      },
+      {
+        "$relationshipId": "8110fbf3-67f0-d6d8-2a99-f3572c3d5793",
+        "$etag": "c3078ea3-49b2-dc36-c9f2-e2f4b7a92cfa",
+        "$sourceId": "$$uuid1$$",
+        "$targetId": "$$uuid4$$",
+        "$relationshipName": "Streams"
+      },
+      {
+        "$relationshipId": "d6ba34de-9930-7260-eb62-e501acfb4d71",
+        "$etag": "4f55d02a-04dd-b4be-a205-75cb44dacf3f",
+        "$sourceId": "$$uuid4$$",
+        "$targetId": "$$uuid5$$",
+        "$relationshipName": "Options"
+      },
+      {
+        "$relationshipId": "f7d28692-6678-d4ee-ddc7-6c31d045ba00",
+        "$etag": "552e4a9d-f3b9-50f2-2d43-b5e85a61f635",
+        "$sourceId": "$$uuid1$$",
+        "$targetId": "$$uuid6$$",
+        "$relationshipName": "Streams"
+      },
+      {
+        "$relationshipId": "b5dcd194-55d0-9286-ba6a-f0f101dec582",
+        "$etag": "0b574848-2fdc-83f2-d1ea-562612a66a41",
+        "$sourceId": "$$uuid6$$",
+        "$targetId": "$$uuid7$$",
+        "$relationshipName": "Options"
+      },
+      {
+        "$relationshipId": "dfdea0ec-deb7-400a-8949-143d83e477b6",
+        "$etag": "e12217b4-3ea8-9406-cc1c-cc209d728a81",
+        "$sourceId": "$$uuid1$$",
+        "$targetId": "$$uuid8$$",
+        "$relationshipName": "Streams"
+      },
+      {
+        "$relationshipId": "b5f79fac-a341-8ec0-2eab-af988722ca60",
+        "$etag": "ee202a1e-46a6-0aae-89d7-0e8145efe1aa",
+        "$sourceId": "$$uuid8$$",
+        "$targetId": "$$uuid9$$",
+        "$relationshipName": "Options"
+      },
+      {
+        "$relationshipId": "a34764a6-9701-ea36-9b82-9076217a8839",
+        "$etag": "2d53938b-c76b-d973-01c4-24201e4f6b4c",
+        "$sourceId": "$$uuid1$$",
+        "$targetId": "$$uuid10$$",
+        "$relationshipName": "Streams"
+      },
+      {
+        "$relationshipId": "325f8c6d-3f75-cd08-551a-0738b5d3f2b3",
+        "$etag": "fbdf36d3-8908-2fe4-a74c-a9d0e157c650",
+        "$sourceId": "$$uuid10$$",
+        "$targetId": "$$uuid11$$",
+        "$relationshipName": "Options"
+      },
+      {
+        "$relationshipId": "f0e23d87-a134-106c-d9c9-79bbed8ed5fc",
+        "$etag": "e448ae09-62da-4e98-97fa-7c38b8358082",
+        "$sourceId": "$$uuid1$$",
+        "$targetId": "$$uuid12$$",
+        "$relationshipName": "Streams"
+      },
+      {
+        "$relationshipId": "abf77282-714e-e720-1b99-5961df66b5bd",
+        "$etag": "66b8a862-37f7-2aaf-a933-6041231f5cdc",
+        "$sourceId": "$$uuid12$$",
+        "$targetId": "$$uuid13$$",
+        "$relationshipName": "Options"
+      },
+      {
+        "$relationshipId": "33dd2809-2628-ced9-f0aa-a63fe72786e1",
+        "$etag": "51bb6cfb-45cb-1db2-4312-8c3d9a8e194b",
+        "$sourceId": "$$uuid1$$",
+        "$targetId": "$$uuid14$$",
+        "$relationshipName": "Streams"
+      },
+      {
+        "$relationshipId": "b3c0c285-4415-af90-66db-989930dffea6",
+        "$etag": "46bb4d58-e4d3-2ee0-779e-b287586b67cc",
+        "$sourceId": "$$uuid14$$",
+        "$targetId": "$$uuid15$$",
+        "$relationshipName": "Options"
+      }
+    ]
+  },
+  "digitalTwinsModels": []
+}
