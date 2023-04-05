@@ -19,7 +19,7 @@ uint32_t uart_read_index;
 uint8_t *uart_characters;
 char *uart_buffer;
 uint32_t uart_last_receive;
-bool new_usb_output_message;
+bool new_uart_input_message;
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Init UART Values
