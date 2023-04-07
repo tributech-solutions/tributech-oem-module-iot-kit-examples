@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <ResourceModel:App xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" name="CLOCK_XMC4" URI="http://resources/4.0.24/app/CLOCK_XMC4/0" description="CLOCK_XMC4 APP configures system and peripheral clocks." version="4.0.24" minDaveVersion="4.0.0" instanceLabel="CLOCK_XMC4_0" appLabel="">
   <upwardMapList xsi:type="ResourceModel:RequiredApp" href="../../UART/v4_1_14/UART_0.app#//@requiredApps.0"/>
-  <upwardMapList xsi:type="ResourceModel:RequiredApp" href="../../USBD/v4_0_16/USBD_0.app#//@requiredApps.1"/>
   <upwardMapList xsi:type="ResourceModel:RequiredApp" href="../../I2C_MASTER/v4_1_30/I2C_MASTER_0.app#//@requiredApps.0"/>
   <upwardMapList xsi:type="ResourceModel:RequiredApp" href="../../RTC/v4_1_14/RTC_0.app#//@requiredApps.0"/>
   <upwardMapList xsi:type="ResourceModel:RequiredApp" href="../../SPI_MASTER/v4_3_26/SPI_MASTER_0.app#//@requiredApps.0"/>

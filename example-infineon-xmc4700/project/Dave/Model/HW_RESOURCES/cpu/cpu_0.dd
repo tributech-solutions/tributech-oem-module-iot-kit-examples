@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" URI="http://resources/48.0.0/peripheral/cpu/0" description="CPU" baseAddress="0xE000E000">
   <provided xsi:type="ResourceModel:ResourceGroup" name="USB_IRQ" URI="http://resources/48.0.0/peripheral/cpu/0/nvic/interrupt/107">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/USBD/v4_0_16/USBD_0.app#//@hwResources.0"/>
     <resourcesList name="iser_setena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_iser3/setena11"/>
     <resourcesList name="icer_clrena" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_icer3/clrena11"/>
     <resourcesList name="ispr_setpend" requiredResourceUri="http://resources/48.0.0/peripheral/cpu/0/nvic_ispr3/setpend11"/>

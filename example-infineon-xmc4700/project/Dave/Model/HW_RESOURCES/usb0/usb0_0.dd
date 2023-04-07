@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" URI="http://resources/48.0.0/peripheral/usb/0" description="Universal Serial Bus" baseAddress="0x50040000">
   <provided xsi:type="ResourceModel:ResourceGroup" name="usb" URI="http://resources/48.0.0/peripheral/usb/0/usb">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/USBD/v4_0_16/USBD_0.app#//@hwResources.1"/>
     <resourcesList name="daint" requiredResourceUri="http://resources/48.0.0/peripheral/usb/0/daint"/>
     <resourcesList name="daintmsk" requiredResourceUri="http://resources/48.0.0/peripheral/usb/0/daintmsk"/>
     <resourcesList name="dcfg" requiredResourceUri="http://resources/48.0.0/peripheral/usb/0/dcfg"/>

@@ -67,7 +67,7 @@ void interrupt_uart_oem_receive ()
 		// if last char is LF
 		if (uart_buffer[uart_read_index-2] == '\r' && uart_buffer[uart_read_index-1] == '\n')
 		{
-			new_usb_output_message = true;
+			new_uart_input_message = true;
 		}
 	}
 }
