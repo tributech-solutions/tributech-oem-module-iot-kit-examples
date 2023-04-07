@@ -48,6 +48,7 @@ int main(void)
   char get_time_message[50] = "";
   char get_status_message[50] = "";
   uint64_t oem_unix_timestamp = 0;
+  uint64_t temp_received_timestamp = 0;
   char string_unix_timestamp [50] = "";
   bool send_temperature_next = true;
   // The OEM is working with a nanosecond timestamp the variable time_t would only work for seconds
@@ -55,6 +56,7 @@ int main(void)
   XMC_RTC_TIME_t received_timestamp_in_seconds;
   int oem_info_gathering_status = 0;
   uint8_t oem_connection_status = 0;
+  struct tm t;
 
   status = DAVE_Init();           /* Initialization of DAVE APPs  */
 
@@ -151,8 +153,8 @@ int main(void)
 		  	  			  //base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
 
 		  	  			  // The OEM works with nanosec and the RTC works with seconds
-		  	  			  oem_unix_timestamp = get_time() *1000000;
-		  	  			  sprintf(string_unix_timestamp, "%llu", oem_unix_timestamp);
+		  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
+		  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
 		  	  			  build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_temperature,base64_string,string_unix_timestamp);
 
@@ -163,8 +165,8 @@ int main(void)
 		  	  			  bintob64(base64_string,&dps310_status.pres_meas, sizeof(float));
 
 		  	  			  // The OEM works with nanosec and the RTC works with seconds
-		  	  			  oem_unix_timestamp = get_time() *1000000;
-		  	  			  sprintf(string_unix_timestamp, "%llu", oem_unix_timestamp);
+		  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
+		  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
 		  	  			  build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string,string_unix_timestamp);
 
@@ -231,8 +233,15 @@ int main(void)
 		  	  		  received_unix_timestamp = parse_get_time(uart_buffer, strlen(uart_buffer));
 		  	  		  if(received_unix_timestamp != 0)
 		  	  		  {
-		  	  			  received_unix_timestamp = received_unix_timestamp / 1000000;
-		  	  			  received_timestamp_in_seconds.raw0 = (uint32_t) received_unix_timestamp;
+		  	  			  temp_received_timestamp = temp_received_timestamp / 1000000;
+						  t = *localtime((time_t*)&temp_received_timestamp);
+						  received_timestamp_in_seconds.year = t.tm_year + 1900;
+						  received_timestamp_in_seconds.month = t.tm_mon + 1;
+						  received_timestamp_in_seconds.days = t.tm_mday;
+						  received_timestamp_in_seconds.hours = t.tm_hour;
+						  received_timestamp_in_seconds.minutes = t.tm_min;
+						  received_timestamp_in_seconds.seconds = t.tm_sec;
+						  received_timestamp_in_seconds.daysofweek = t.tm_wday;
 		  	  			  RTC_SetTime(&received_timestamp_in_seconds);
 		  	  			  oem_info_gathering_status = 3;
 		  	  		  }
