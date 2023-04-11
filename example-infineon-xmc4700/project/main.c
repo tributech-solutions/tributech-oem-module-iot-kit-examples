@@ -179,7 +179,7 @@ int main(void)
 							oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 							sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-							build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_float,base64_string, string_unix_timestamp);
+							build_provide_value(provide_values_message,transaction_nr_string,valuemetadataid_float,base64_string, string_unix_timestamp);
 						}
 						else if (send_index == 2 && strcmp(valuemetadataid_double,"") != 0)
 						{
@@ -190,7 +190,7 @@ int main(void)
 							oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 							sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-							build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_double,base64_string, string_unix_timestamp);
+							build_provide_value(provide_values_message,transaction_nr_string,valuemetadataid_double,base64_string, string_unix_timestamp);
 						}
 
 						else if (send_index == 3 && strcmp(valuemetadataid_int32,"") != 0)
@@ -202,7 +202,7 @@ int main(void)
 							oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 							sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-							build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_int32,base64_string, string_unix_timestamp);
+							build_provide_value(provide_values_message,transaction_nr_string,valuemetadataid_int32,base64_string, string_unix_timestamp);
 						}
 
 						else if (send_index == 4 && strcmp(valuemetadataid_int64,"") != 0)
@@ -214,7 +214,7 @@ int main(void)
 							oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 							sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-							build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_int64,base64_string, string_unix_timestamp);
+							build_provide_value(provide_values_message,transaction_nr_string,valuemetadataid_int64,base64_string, string_unix_timestamp);
 						}
 						else if (send_index == 5 && strcmp(valuemetadataid_step,"") != 0)
 						{
@@ -224,7 +224,7 @@ int main(void)
 							oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 							sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-							build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_step,base64_string, string_unix_timestamp);
+							build_provide_value(provide_values_message,transaction_nr_string,valuemetadataid_step,base64_string, string_unix_timestamp);
 						}
 						else if (send_index == 6 && strcmp(valuemetadataid_pmin,"") != 0)
 						{
@@ -234,7 +234,7 @@ int main(void)
 							oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 							sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-							build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pmin,base64_string, string_unix_timestamp);
+							build_provide_value(provide_values_message,transaction_nr_string,valuemetadataid_pmin,base64_string, string_unix_timestamp);
 						}
 						else if (send_index == 7 && strcmp(valuemetadataid_pmax,"") != 0)
 						{
@@ -244,7 +244,7 @@ int main(void)
 							oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 							sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-							build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pmax,base64_string, string_unix_timestamp);
+							build_provide_value(provide_values_message,transaction_nr_string,valuemetadataid_pmax,base64_string, string_unix_timestamp);
 						}
 
 
