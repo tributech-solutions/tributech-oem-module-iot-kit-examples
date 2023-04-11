@@ -43,7 +43,7 @@ int main(void)
   char valuemetadataid_pressure[37] = "";		// ValueMetaDataId 2
 
   char *base64_string;      			// pointer to base64 string
-  char * provide_values_message;		// provide values output message
+  char * provide_value_message;		// provide values output message
   char get_config_message[50] = "";
   char get_time_message[50] = "";
   char get_status_message[50] = "";
@@ -144,7 +144,7 @@ int main(void)
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // build base64 strings from values and build send string
-		  	  		  provide_values_message = calloc(500,sizeof(char));
+		  	  		  provide_value_message = calloc(500,sizeof(char));
 		  	  		  base64_string = calloc(20,sizeof(char));
 
 		  	  		  if (send_temperature_next)
@@ -156,7 +156,7 @@ int main(void)
 		  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 		  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-		  	  			  build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_temperature,base64_string,string_unix_timestamp);
+		  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string,string_unix_timestamp);
 
 		  	  			  send_temperature_next = false;
 		  	  		  }
@@ -168,23 +168,23 @@ int main(void)
 		  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 		  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-		  	  			  build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string,string_unix_timestamp);
+		  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string,string_unix_timestamp);
 
 		  	  			  send_temperature_next = true;
 		  	  		  }
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // output via usb
-		  	  		  USBD_VCOM_SendData((int8_t*) provide_values_message, strlen(provide_values_message));
+		  	  		  USBD_VCOM_SendData((int8_t*) provide_value_message, strlen(provide_value_message));
 		  	  		  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // output via uart
-		  	  		  uart_output(&UART_OEM,provide_values_message);
+		  	  		  uart_output(&UART_OEM,provide_value_message);
 
 		  	  		  delay_ms(100);
 		  	  		  free(base64_string);
-		  	  		  free(provide_values_message);
+		  	  		  free(provide_value_message);
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // save timestamp

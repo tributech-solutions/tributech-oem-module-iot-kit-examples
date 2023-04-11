@@ -23,8 +23,8 @@ int build_get_configuration(char * result, char * transaction_nr)
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// build api command - provide values
-int build_provide_values(char * result, char * transaction_nr, char * id, char * data, char * timestamp)
+// build api command - provide value
+int build_provide_value(char * result, char * transaction_nr, char * id, char * data, char * timestamp)
 {
 	if (strcmp(timestamp,"") == 0)
 	{
@@ -36,7 +36,7 @@ int build_provide_values(char * result, char * transaction_nr, char * id, char *
 		return 0;
 	}
 
-	sprintf(result, "{\"TransactionNr\": %s,\"Operation\": \"ProvideValues\",\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": %s,\"Value\": \"%s\"}]}\r\n" , transaction_nr, id, timestamp, data);
+	sprintf(result, "{\"TransactionNr\": %s,\"Operation\": \"ProvideValue\",\"ValueMetadataId\": \"%s\",\"Timestamp\": %s,\"Value\": \"%s\"}\r\n" , transaction_nr, id, timestamp, data);
 
 	return 1;
 }
@@ -252,7 +252,7 @@ uint8_t get_valueMetaDataId(char * stream_name, char * id)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// parse get time
+// parse get time receive command
 uint64_t parse_get_time(char * data, uint16_t cmd_len)
 {
 	uint16_t number_of_tokens = 0;		// number of tokens
@@ -283,7 +283,7 @@ uint64_t parse_get_time(char * data, uint16_t cmd_len)
 	}
 
 	//+++++++++++++++++++++++++++++++++++++++++++
-	// get unix timestamp
+	// get unix timestamp in nanoseconds
 	for(uint8_t j = 1; j<number_of_tokens; j++)
 	{
 		length = t[j].end-t[j].start;

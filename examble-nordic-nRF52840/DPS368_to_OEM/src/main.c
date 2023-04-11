@@ -26,7 +26,7 @@ char valuemetadataid_pressure[37] = "";
 int oem_info_gathering_status = 0;
 
 char *base64_string;      			// pointer to base64 string
-char * provide_values_message;		// provide values output message
+char * provide_value_message;		// provide values output message
 char get_config_message[50] = "";
 char get_time_message [50] = "";
 char get_status_message [50] = "";
@@ -86,7 +86,7 @@ void main(void)
 
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		    	        // build base64 strings from values and build send string
-		    	        provide_values_message = k_calloc(500,sizeof(char));
+		    	        provide_value_message = k_calloc(500,sizeof(char));
                         base64_string = k_calloc(20,sizeof(char));
 
                         if(tmp_available)
@@ -95,7 +95,7 @@ void main(void)
 
                             sprintf(string_unix_timestamp, "%llu" , unix_timestamp);
 
-		    		        build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_temperature,base64_string, string_unix_timestamp);
+		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string, string_unix_timestamp);
 
                             tmp_available = false;
                         }
@@ -105,20 +105,20 @@ void main(void)
 
                             sprintf(string_unix_timestamp, "%llu" , unix_timestamp);
 
-		    		        build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string, string_unix_timestamp);
+		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string, string_unix_timestamp);
 
                             psr_available = false;
                         }
 
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		    	        // output via uart
-                        LOG_INF("%s", provide_values_message);
-                        uart_tx(uart, provide_values_message, strlen(provide_values_message) + 1, 500);
+                        LOG_INF("%s", provide_value_message);
+                        uart_tx(uart, provide_value_message, strlen(provide_value_message) + 1, 500);
 
                         k_sleep(K_MSEC(5000));
 
                         k_free(base64_string);
-		    	        k_free(provide_values_message);
+		    	        k_free(provide_value_message);
                     }
                     break;
 
