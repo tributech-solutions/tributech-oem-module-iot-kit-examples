@@ -40,16 +40,16 @@ void uart_callback(const struct device *dev,
     switch (evt->type)
     {
         case UART_TX_DONE:
-                LOG_INF("UART_TX_DONE");
+                // LOG_INF("UART_TX_DONE");
                 break;
 
         case UART_TX_ABORTED:
-                LOG_INF("UART_TX_ABORTED");
+                // LOG_INF("UART_TX_ABORTED");
                 break;
 
         case UART_RX_RDY:
                 // Save it to uart receive buffer
-                LOG_INF("UART_RX_RDY");
+                // LOG_INF("UART_RX_RDY");
 
                 pos = strstr((char *) evt->data.rx.buf, needle);
                 if(pos == NULL)
@@ -89,7 +89,7 @@ void uart_callback(const struct device *dev,
 
         case UART_RX_BUF_REQUEST:
         {
-            LOG_INF("UART_RX_BUF_REQUEST");
+            // LOG_INF("UART_RX_BUF_REQUEST");
             uint8_t *buf;
 
             err = k_mem_slab_alloc(&uart_slab, (void **)&buf, K_NO_WAIT);
@@ -101,16 +101,16 @@ void uart_callback(const struct device *dev,
         }
 
         case UART_RX_BUF_RELEASED:
-            LOG_INF("UART_RX_BUF_RELEASED");
+            // LOG_INF("UART_RX_BUF_RELEASED");
             k_mem_slab_free(&uart_slab, (void **)&evt->data.rx_buf.buf);
             break;
 
         case UART_RX_DISABLED:
-            LOG_INF("UART_RX_DISABLED");
+            // LOG_INF("UART_RX_DISABLED");
             break;
 
         case UART_RX_STOPPED:
-            LOG_INF("UART_RX_STOPPED");
+            // LOG_INF("UART_RX_STOPPED");
             break;
     }
 }

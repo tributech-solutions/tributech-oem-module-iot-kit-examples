@@ -16,7 +16,7 @@ float pressure_previous;
 char base64_string[50]; 
 char valuemetadataid_temperature[37] = "3b619323-7a61-465b-88df-24297efd5dda"; 
 char valuemetadataid_pressure[37] = "dbc298ea-f9b2-4daf-a93b-5a891fd4ddc1";
-char provide_values_message[500];
+char provide_value_message[500];
 
 Adafruit_DPS310 dps;
 Adafruit_Sensor *dps_temp = dps.getTemperatureSensor();
@@ -74,8 +74,8 @@ void loop()
     encode_base64((char *) &temp_event.temperature, 4, base64_string);
 
     increase_transaction_nr();
-    build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_temperature,base64_string,"0");
-    Serial.println(provide_values_message);
+    build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string,"0");
+    Serial.println(provide_value_message);
 
     temperature_previous = temp_event.temperature;
     counter = 0;
@@ -88,11 +88,10 @@ void loop()
     encode_base64((char *) &pressure_event.pressure, 4, base64_string);
 
     increase_transaction_nr();
-    build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string,"0");
-    Serial.println(provide_values_message);
+    build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string,"0");
+    Serial.println(provide_value_message);
 
     pressure_previous = pressure_event.pressure;
     counter = 0;
   } 
 }
-

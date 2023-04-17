@@ -18,16 +18,23 @@
 #include <logging/log.h>
 #include <tributech_oem_api.h>
 
+
 LOG_MODULE_REGISTER(app, LOG_LEVEL_INF);
 
-bool stream_valuemetadata_ids_received = false;
 char valuemetadataid_temperature[37] = "";
 char valuemetadataid_pressure[37] = "";
+int oem_info_gathering_status = 0;
 
 char *base64_string;      			// pointer to base64 string
-char * provide_values_message;		// provide values output message
+char * provide_value_message;		// provide values output message
 char get_config_message[50] = "";
+char get_time_message [50] = "";
+char get_status_message [50] = "";
+char string_unix_timestamp [50] = "";
+uint8_t oem_connection_status = 0;
 uint8_t return_code = 0;
+// the timestamp uses nanosec and time_t would use seconds
+uint64_t received_unix_timestamp;
 
 void main(void)
 {
@@ -35,6 +42,7 @@ void main(void)
     uart_init();
     dps368_init();
     workqueue_init_and_start();
+    start_unix_timer();
 
     LOG_INF("dev %p name %s\n", data.i2c_master, data.i2c_master->name);
     // This k_sleep is needed to allow the Tributech OEM module to initialize 
@@ -42,73 +50,130 @@ void main(void)
 
     while (1) 
     {
-        if(!new_uart_message && !stream_valuemetadata_ids_received)
+        if(!new_uart_message)
         {
-            build_get_configuration(get_config_message,"1");
-            get_config_transactionnr = 1;
-
-            LOG_INF("%s", get_config_message);
-            uart_tx(uart, get_config_message, strlen(get_config_message) + 1, 500);  
-        }
-        if(stream_valuemetadata_ids_received && (tmp_available || psr_available))
-        {
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++
-            // increase transaction number
-            increase_transaction_nr();
-
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++
-			// build base64 strings from values and build send string
-			provide_values_message = k_calloc(500,sizeof(char));
-            base64_string = k_calloc(20,sizeof(char));
-
-            if(tmp_available)
+            switch (oem_info_gathering_status)
             {
-				bintob64(base64_string,&data.tmp_val, sizeof(float));
+                // get configuration from OEM
+                case 0:
+                    build_get_configuration(get_config_message,"1");
+                    get_config_transactionnr = 1;
 
-				build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_temperature,base64_string,"0");
-        
-                tmp_available = false;
+                    LOG_INF("%s", get_config_message);
+                    uart_tx(uart, get_config_message, strlen(get_config_message) + 1, 500);  
+                    break;
+                // get connection status from OEM
+                case 1:
+                    build_get_status(get_status_message, "2");
+
+                    LOG_INF("%s", get_status_message);
+                    uart_tx(uart, get_status_message, strlen(get_status_message) + 1, 500);
+                    break;
+                // get timestamp from OEM
+                case 2:
+                    build_get_time(get_time_message, "3");
+
+                    LOG_INF("%s", get_time_message);
+                    uart_tx(uart, get_time_message, strlen(get_time_message) +1, 500);
+                    break;
+                // send value to the OEM
+                case 3:
+                    if(tmp_available || psr_available)
+                    {
+                        //++++++++++++++++++++++++++++++++++++++++++++++++++++
+                            // increase transaction number
+                        increase_transaction_nr();
+
+                        //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		    	        // build base64 strings from values and build send string
+		    	        provide_value_message = k_calloc(500,sizeof(char));
+                        base64_string = k_calloc(20,sizeof(char));
+
+                        if(tmp_available)
+                        {       
+		    		        bintob64(base64_string,&data.tmp_val, sizeof(float));
+
+                            sprintf(string_unix_timestamp, "%llu" , unix_timestamp);
+
+		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string, string_unix_timestamp);
+
+                            tmp_available = false;
+                        }
+                        else if (psr_available)
+                        {
+		    		        bintob64(base64_string,&data.psr_val, sizeof(float));
+
+                            sprintf(string_unix_timestamp, "%llu" , unix_timestamp);
+
+		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string, string_unix_timestamp);
+
+                            psr_available = false;
+                        }
+
+                        //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		    	        // output via uart
+                        LOG_INF("%s", provide_value_message);
+                        uart_tx(uart, provide_value_message, strlen(provide_value_message) + 1, 500);
+
+                        k_sleep(K_MSEC(5000));
+
+                        k_free(base64_string);
+		    	        k_free(provide_value_message);
+                    }
+                    break;
+
+                default:
+                    break;
             }
-            else if (psr_available)
-            {
-				bintob64(base64_string,&data.psr_val, sizeof(float));
-
-				build_provide_values(provide_values_message,transaction_nr_string,valuemetadataid_pressure,base64_string,"0");
-
-                psr_available = false;
-            }
-
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++
-			// output via uart
-            LOG_INF("%s", provide_values_message);
-            uart_tx(uart, provide_values_message, strlen(provide_values_message) + 1, 500);
-
-            k_sleep(K_MSEC(100));
-
-            k_free(base64_string);
-			k_free(provide_values_message);
-
         }
-        if(new_uart_message)
+        else
         {
-            return_code = parse_oem_response_save_configuration(uart_receive_buf, uart_receive_len);
+            switch (oem_info_gathering_status)
+            {
+                // get configuration from OEM
+                case 0:
+                    return_code = parse_oem_response_save_configuration(uart_receive_buf, uart_receive_len);
             
-            if(return_code)
-            {
-                get_valueMetaDataId("Temperature", valuemetadataid_temperature);
-                get_valueMetaDataId("Pressure", valuemetadataid_pressure);
+                    if(return_code)
+                    {
+                        get_valueMetaDataId("Temperature", valuemetadataid_temperature);
+                        get_valueMetaDataId("Pressure", valuemetadataid_pressure);
 
-                new_uart_message = false;
-                stream_valuemetadata_ids_received = true;
+                        oem_info_gathering_status = 1;
+                    }
+                    break;
+                // get connection status from OEM
+                case 1:
+                    oem_connection_status = parse_get_status(uart_receive_buf, uart_receive_len);
+                    if(oem_connection_status == 2)
+                    {
+                        LOG_INF("The OEM has successfuly connected to the node.");
+                        oem_info_gathering_status = 2;
+                    }
+                    else
+                    {
+                        LOG_INF("OEM not connected to node. Waiting...\n");
+                        k_sleep(K_MSEC(2000));
+                    }
+                    break;
+                // get timestamp from OEM
+                case 2:
+                    received_unix_timestamp = parse_get_time(uart_receive_buf, uart_receive_len);
+                    LOG_INF("Timestamp set to : %llu", received_unix_timestamp);
+                    if(received_unix_timestamp != 0)
+                    {
+                        unix_timestamp = received_unix_timestamp;
+                        oem_info_gathering_status = 3;
+                    }
+                    break;
+                default:
+                    LOG_INF("%s", uart_receive_buf);
+                    break;
             }
-            else
-            {
-                memset(uart_receive_buf, 0x0, 4096);
-                uart_reinit();
-                new_uart_message = false;
-                stream_valuemetadata_ids_received = false;
-            }
+            new_uart_message = false;
+            memset(uart_receive_buf, 0x0, 4096);
+            uart_reinit();
         }
-        k_sleep(K_MSEC(1000));
+    k_sleep(K_MSEC(1000));
     }
 }

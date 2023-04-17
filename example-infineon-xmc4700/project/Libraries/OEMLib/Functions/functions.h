@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <inttypes.h>
-#include <dave.h>
+#include <DAVE.h>
 
 
 uint32_t _msCounter;
@@ -26,6 +26,9 @@ void delay_ms(uint32_t ms);
 // Get Time
 time_t get_time(void);
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Get Time
+time_t get_time(void);
 
 
 

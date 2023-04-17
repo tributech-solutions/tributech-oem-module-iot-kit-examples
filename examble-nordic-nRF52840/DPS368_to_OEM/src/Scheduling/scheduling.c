@@ -23,6 +23,8 @@ bool tmp_available = false;
 bool psr_available = false;
 float last_tmp = 0;
 float last_psr = 0;
+struct k_timer unix_timer;
+uint64_t unix_timestamp;
 
 /* CONFIG_SYSTEM_WORKQUEUE_STACK_SIZE is configured in prj.conf */
 K_THREAD_STACK_DEFINE(application_stack_area,
@@ -77,7 +79,7 @@ void workqueue_init_and_start()
                        K_THREAD_STACK_SIZEOF(application_stack_area), SCHEDULER_PRIORITY,
                        NULL);
     
-    // Start dps368 function with a 1 minute periode
+    // Start dps368 function with a 2 minute periode
     k_timer_start(&dps368_timer, K_SECONDS(120), K_SECONDS(120));
     
     // Initialize dps368 workqueue item with associated function
@@ -92,5 +94,21 @@ static void dps368_timer_handler(struct k_timer *dummy)
     k_work_submit_to_queue(&dps368_workqueue, &dps368_work_item);
 }
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// unix timer handler
+static void unix_timer_handler(struct k_timer *dummy)
+{
+    // The OEM is working with nanoseconds our timer is only cabable of microseconds
+    unix_timestamp = unix_timestamp + 1000;
+}
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// start unix timer
+void start_unix_timer()
+{
+    k_timer_start(&unix_timer, K_MSEC(1), K_MSEC(1));
+}
+
 K_TIMER_DEFINE(dps368_timer, dps368_timer_handler, NULL);
+K_TIMER_DEFINE(unix_timer, unix_timer_handler, NULL);
 
