@@ -60,7 +60,8 @@ void main(void)
                     get_config_transactionnr = 1;
 
                     LOG_INF("%s", get_config_message);
-                    uart_tx(uart, get_config_message, strlen(get_config_message) + 1, 500);  
+                    uart_tx(uart, get_config_message, strlen(get_config_message) + 1, 500); 
+                    k_sleep(K_MSEC(2000)); 
                     break;
                 // get connection status from OEM
                 case 1:
@@ -68,6 +69,7 @@ void main(void)
 
                     LOG_INF("%s", get_status_message);
                     uart_tx(uart, get_status_message, strlen(get_status_message) + 1, 500);
+                    k_sleep(K_MSEC(2000)); 
                     break;
                 // get timestamp from OEM
                 case 2:
@@ -75,6 +77,7 @@ void main(void)
 
                     LOG_INF("%s", get_time_message);
                     uart_tx(uart, get_time_message, strlen(get_time_message) +1, 500);
+                    k_sleep(K_MSEC(2000)); 
                     break;
                 // send value to the OEM
                 case 3:
@@ -126,7 +129,7 @@ void main(void)
                     break;
             }
         }
-        else
+        if(new_uart_message)
         {
             switch (oem_info_gathering_status)
             {
@@ -140,6 +143,15 @@ void main(void)
                         get_valueMetaDataId("Pressure", valuemetadataid_pressure);
 
                         oem_info_gathering_status = 1;
+                        new_uart_message = false;
+                        memset(uart_receive_buf, 0x0, 4096);
+                        uart_reinit();
+                    }
+                    else
+                    {
+                        new_uart_message = false;
+                        memset(uart_receive_buf, 0x0, 4096);
+                        uart_reinit();
                     }
                     break;
                 // get connection status from OEM
@@ -149,10 +161,16 @@ void main(void)
                     {
                         LOG_INF("The OEM has successfuly connected to the node.");
                         oem_info_gathering_status = 2;
+                        new_uart_message = false;
+                        memset(uart_receive_buf, 0x0, 4096);
+                        uart_reinit();
                     }
                     else
                     {
                         LOG_INF("OEM not connected to node. Waiting...\n");
+                        new_uart_message = false;
+                        memset(uart_receive_buf, 0x0, 4096);
+                        uart_reinit();
                         k_sleep(K_MSEC(2000));
                     }
                     break;
@@ -164,15 +182,24 @@ void main(void)
                     {
                         unix_timestamp = received_unix_timestamp;
                         oem_info_gathering_status = 3;
+                        new_uart_message = false;
+                        memset(uart_receive_buf, 0x0, 4096);
+                        uart_reinit();
+                    }
+                    else
+                    {
+                        new_uart_message = false;
+                        memset(uart_receive_buf, 0x0, 4096);
+                        uart_reinit();
                     }
                     break;
                 default:
                     LOG_INF("%s", uart_receive_buf);
+                    new_uart_message = false;
+                    memset(uart_receive_buf, 0x0, 4096);
+                    uart_reinit();
                     break;
             }
-            new_uart_message = false;
-            memset(uart_receive_buf, 0x0, 4096);
-            uart_reinit();
         }
     k_sleep(K_MSEC(1000));
     }
