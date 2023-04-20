@@ -60,8 +60,7 @@ void main(void)
                     get_config_transactionnr = 1;
 
                     LOG_INF("%s", get_config_message);
-                    uart_tx(uart, get_config_message, strlen(get_config_message) + 1, 500); 
-                    k_sleep(K_MSEC(2000)); 
+                    uart_tx(uart, get_config_message, strlen(get_config_message) + 1, 500);  
                     break;
                 // get connection status from OEM
                 case 1:
@@ -69,7 +68,6 @@ void main(void)
 
                     LOG_INF("%s", get_status_message);
                     uart_tx(uart, get_status_message, strlen(get_status_message) + 1, 500);
-                    k_sleep(K_MSEC(2000)); 
                     break;
                 // get timestamp from OEM
                 case 2:
@@ -77,14 +75,13 @@ void main(void)
 
                     LOG_INF("%s", get_time_message);
                     uart_tx(uart, get_time_message, strlen(get_time_message) +1, 500);
-                    k_sleep(K_MSEC(2000)); 
                     break;
                 // send value to the OEM
                 case 3:
                     if(tmp_available || psr_available)
                     {
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++
-                            // increase transaction number
+                        // increase transaction number
                         increase_transaction_nr();
 
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++
