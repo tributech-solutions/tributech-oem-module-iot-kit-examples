@@ -37,14 +37,14 @@
 int main(void)
 {
   DAVE_STATUS_t status;
-  time_t last_command_sent;
+  time_t last_command_sent = 0;
   bool disable_provide_values;
   char valuemetadataid_temperature[37] = "";	// ValueMetaDataId 1
   char valuemetadataid_pressure[37] = "";		// ValueMetaDataId 2
 
   char *base64_string;      			// pointer to base64 string
   char * provide_value_message;		// provide values output message
-  char get_config_message[50] = "";
+  char get_config_message[100] = "";
   char get_time_message[50] = "";
   char get_status_message[50] = "";
   uint64_t oem_unix_timestamp = 0;
@@ -76,11 +76,11 @@ int main(void)
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // The following boolean disables the provide values function.
   // This means that the sensor values from the DPS368 are not used anymore and the user is able to send data to the OEm via the  COM port.
-  disable_provide_values = true; 		// true for linking
+  disable_provide_values = false; 		// true for linking
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // init usb and uart interface
-  init_usb_Connection();
+  //init_usb_Connection();
   init_uart_connection();
 
   if(!disable_provide_values)
@@ -97,11 +97,11 @@ int main(void)
 
   while(1U)
   {
-	  if(USBD_VCOM_IsEnumDone() != 0)
-	  {
+	  //if(USBD_VCOM_IsEnumDone() != 0)
+	  //{
 		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  // get usb input
-		  wait_for_input();
+		  //wait_for_input();
 
 		  if(!new_uart_input_message && last_command_sent + 10 < get_time() && !disable_provide_values)
 		  {
@@ -115,7 +115,7 @@ int main(void)
 		  	  		  get_config_transactionnr = 1;
 		  	  		  last_command_sent = get_time();
 		  	  		  break;
-		  	  	  case 1:
+		  	  	  /*case 1:
 		  	  		  build_get_status(get_status_message, "2");
 
 		  	  		  uart_output(&UART_OEM, get_status_message);
@@ -128,7 +128,7 @@ int main(void)
 		  	  		  uart_output(&UART_OEM, get_time_message);
 
 		  	  		  last_command_sent = get_time();
-		  	  		  break;
+		  	  		  break;*/
 		  	  	  case 3:
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // get temperature and pressure from dps310
@@ -156,7 +156,7 @@ int main(void)
 		  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 		  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-		  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string,string_unix_timestamp);
+		  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string,"0");//string_unix_timestamp);
 
 		  	  			  send_temperature_next = false;
 		  	  		  }
@@ -168,15 +168,15 @@ int main(void)
 		  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
 		  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-		  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string,string_unix_timestamp);
+		  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string,"0");//string_unix_timestamp);
 
 		  	  			  send_temperature_next = true;
 		  	  		  }
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // output via usb
-		  	  		  USBD_VCOM_SendData((int8_t*) provide_value_message, strlen(provide_value_message));
-		  	  		  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
+		  	  		  //USBD_VCOM_SendData((int8_t*) provide_value_message, strlen(provide_value_message));
+		  	  		  //CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // output via uart
@@ -199,8 +199,8 @@ int main(void)
 		  {
 			  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 			  // output on usb
-			  USBD_VCOM_SendData((int8_t*) uart_buffer, strlen(uart_buffer));
-			  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
+			  //USBD_VCOM_SendData((int8_t*) uart_buffer, strlen(uart_buffer));
+			  //CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 
 			  switch(oem_info_gathering_status)
 			  {
@@ -215,7 +215,7 @@ int main(void)
 
 		  	  		  if(strcmp(valuemetadataid_temperature,"") != 0 && strcmp(valuemetadataid_pressure,"") != 0)
 		  	  		  {
-		  	  			  oem_info_gathering_status = 1;
+		  	  			  oem_info_gathering_status = 3;//1;
 		  	  		  }
 		  	  		  break;
 		  	  	  case 1:
@@ -229,6 +229,7 @@ int main(void)
 						  delay_ms(2000);
 					  }
 		  	  		  break;
+
 		  	  	  case 2:
 		  	  		  received_unix_timestamp = parse_get_time(uart_buffer, strlen(uart_buffer));
 		  	  		  if(received_unix_timestamp != 0)
@@ -257,6 +258,7 @@ int main(void)
 			  memset(uart_buffer,0x0,UART_RECEIVE_BUFFER_SIZE);
 			  uart_read_index = 0;
 		  }
+		  /*
 		  else
 		  {
 			  //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -269,7 +271,7 @@ int main(void)
 			  // reset uart receive buffer
 			  memset(uart_buffer,0x0,UART_RECEIVE_BUFFER_SIZE);
 			  uart_read_index = 0;
-		  }
-	  }
+		  }*/
+	  //}
   }
 }

@@ -36,7 +36,8 @@ int build_provide_value(char * result, char * transaction_nr, char * id, char * 
 		return 0;
 	}
 
-	sprintf(result, "{\"TransactionNr\": %s,\"Operation\": \"ProvideValue\",\"ValueMetadataId\": \"%s\",\"Timestamp\": %s,\"Value\": \"%s\"}\r\n" , transaction_nr, id, timestamp, data);
+	sprintf(result, "{\"TransactionNr\": %s,\"Operation\": \"ProvideValues\",\"ValueMetadataId\": \"%s\",\"Values\": [{\"Timestamp\": %s,\"Value\": \"%s\"}]}\r\n" , transaction_nr, id, timestamp, data);
+	//sprintf(result, "{\"TransactionNr\": %s,\"Operation\": \"ProvideValue\",\"ValueMetadataId\": \"%s\",\"Timestamp\": %s,\"Value\": \"%s\"}\r\n" , transaction_nr, id, timestamp, data);
 
 	return 1;
 }
