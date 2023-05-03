@@ -23,7 +23,7 @@ LOG_MODULE_REGISTER(app, LOG_LEVEL_INF);
 
 char valuemetadataid_temperature[37] = "";
 char valuemetadataid_pressure[37] = "";
-int oem_info_gathering_status = 0;
+uint8_t oem_info_gathering_status = 0;
 
 char *base64_string;      			// pointer to base64 string
 char * provide_value_message;		// provide values output message
@@ -78,7 +78,7 @@ void main(void)
                     break;
                 // send value to the OEM
                 case 3:
-                    if(tmp_available || psr_available)
+                    if((tmp_available || psr_available))
                     {
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++
                         // increase transaction number
@@ -91,9 +91,10 @@ void main(void)
 
                         if(tmp_available)
                         {       
+                            LOG_INF("Sending temperature value to OEM: %f", data.tmp_val);
 		    		        bintob64(base64_string,&data.tmp_val, sizeof(float));
 
-                            sprintf(string_unix_timestamp, "%llu" , unix_timestamp);
+                            sprintf(string_unix_timestamp, "%llu" , (uint64_t)(unix_timestamp*1000));
 
 		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string, string_unix_timestamp);
 
@@ -101,9 +102,10 @@ void main(void)
                         }
                         else if (psr_available)
                         {
+                            LOG_INF("Sending pressure value to OEM: %f", data.psr_val);
 		    		        bintob64(base64_string,&data.psr_val, sizeof(float));
 
-                            sprintf(string_unix_timestamp, "%llu" , unix_timestamp);
+                            sprintf(string_unix_timestamp, "%llu" , (uint64_t)(unix_timestamp*1000));
 
 		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string, string_unix_timestamp);
 
@@ -120,9 +122,6 @@ void main(void)
                         k_free(base64_string);
 		    	        k_free(provide_value_message);
                     }
-                    break;
-
-                default:
                     break;
             }
         }
@@ -177,7 +176,7 @@ void main(void)
                     LOG_INF("Timestamp set to : %llu", received_unix_timestamp);
                     if(received_unix_timestamp != 0)
                     {
-                        unix_timestamp = received_unix_timestamp;
+                        unix_timestamp = received_unix_timestamp/1000;
                         oem_info_gathering_status = 3;
                         new_uart_message = false;
                         memset(uart_receive_buf, 0x0, 4096);
@@ -190,7 +189,7 @@ void main(void)
                         uart_reinit();
                     }
                     break;
-                default:
+                case 3:
                     LOG_INF("%s", uart_receive_buf);
                     new_uart_message = false;
                     memset(uart_receive_buf, 0x0, 4096);

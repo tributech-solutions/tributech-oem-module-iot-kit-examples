@@ -99,7 +99,7 @@ static void dps368_timer_handler(struct k_timer *dummy)
 static void unix_timer_handler(struct k_timer *dummy)
 {
     // The OEM is working with nanoseconds our timer is only cabable of microseconds
-    unix_timestamp = unix_timestamp + 1000;
+    unix_timestamp = unix_timestamp + 1;
 }
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
