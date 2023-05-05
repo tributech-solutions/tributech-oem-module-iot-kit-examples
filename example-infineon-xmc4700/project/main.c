@@ -29,15 +29,10 @@
  * code.
  */
 
-
-
-
-
-
 int main(void)
 {
   DAVE_STATUS_t status;
-  time_t last_command_sent;
+  time_t last_command_sent = 0;
   bool disable_provide_values;
   char valuemetadataid_temperature[37] = "";	// ValueMetaDataId 1
   char valuemetadataid_pressure[37] = "";		// ValueMetaDataId 2
@@ -76,7 +71,7 @@ int main(void)
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // The following boolean disables the provide values function.
   // This means that the sensor values from the DPS368 are not used anymore and the user is able to send data to the OEm via the  COM port.
-  disable_provide_values = true; 		// true for linking
+  disable_provide_values = false; 		// true for linking
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // init usb and uart interface
@@ -103,7 +98,7 @@ int main(void)
 		  // get usb input
 		  wait_for_input();
 
-		  if(!new_uart_input_message && last_command_sent + 10 < get_time() && !disable_provide_values)
+		  if(!new_uart_input_message && last_command_sent + 20 < get_time() && !disable_provide_values)
 		  {
 
 			  switch(oem_info_gathering_status)
@@ -233,7 +228,7 @@ int main(void)
 		  	  		  received_unix_timestamp = parse_get_time(uart_buffer, strlen(uart_buffer));
 		  	  		  if(received_unix_timestamp != 0)
 		  	  		  {
-		  	  			  temp_received_timestamp = temp_received_timestamp / 1000000;
+		  	  			  temp_received_timestamp = received_unix_timestamp / 1000000;
 						  t = *localtime((time_t*)&temp_received_timestamp);
 						  received_timestamp_in_seconds.year = t.tm_year + 1900;
 						  received_timestamp_in_seconds.month = t.tm_mon + 1;
@@ -252,19 +247,6 @@ int main(void)
 
 
 			  new_uart_input_message = false;
-			  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			  // reset uart receive buffer
-			  memset(uart_buffer,0x0,UART_RECEIVE_BUFFER_SIZE);
-			  uart_read_index = 0;
-		  }
-		  else
-		  {
-			  //++++++++++++++++++++++++++++++++++++++++++++++++++++
-			  // output on usb
-			  USBD_VCOM_SendData((int8_t*) uart_buffer, strlen(uart_buffer));
-			  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
-			  new_uart_input_message = false;
-
 			  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			  // reset uart receive buffer
 			  memset(uart_buffer,0x0,UART_RECEIVE_BUFFER_SIZE);
