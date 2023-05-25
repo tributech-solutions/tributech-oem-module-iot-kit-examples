@@ -25,7 +25,8 @@ char valuemetadataid_temperature[37] = "";
 char valuemetadataid_pressure[37] = "";
 int oem_info_gathering_status = 0;
 
-char *base64_string;      			// pointer to base64 string
+char base64_string_temperature[20] = "";
+char base64_string_pressure[20] = "";
 char * provide_value_message;		// provide values output message
 char get_config_message[50] = "";
 char get_time_message [50] = "";
@@ -76,9 +77,9 @@ void main(void)
                     LOG_INF("%s", get_time_message);
                     uart_tx(uart, get_time_message, strlen(get_time_message) +1, 500);
                     break;
-                // send value to the OEM
+                // send temperature value to the OEM
                 case 3:
-                    if(tmp_available || psr_available)
+                    if(tmp_available)
                     {
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++
                         // increase transaction number
@@ -87,25 +88,49 @@ void main(void)
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		    	        // build base64 strings from values and build send string
 		    	        provide_value_message = k_calloc(500,sizeof(char));
-                        base64_string = k_calloc(20,sizeof(char));
+                        memset(base64_string_temperature, 0x0, sizeof(char)*20);
 
                         if(tmp_available)
                         {       
-		    		        bintob64(base64_string,&data.tmp_val, sizeof(float));
+		    		        bintob64(base64_string_temperature,&data.tmp_val, sizeof(float));
 
                             sprintf(string_unix_timestamp, "%llu" , unix_timestamp);
 
-		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string, string_unix_timestamp);
+		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string_temperature, string_unix_timestamp);
 
                             tmp_available = false;
                         }
-                        else if (psr_available)
+
+                        //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		    	        // output via uart
+                        LOG_INF("%s", provide_value_message);
+                        uart_tx(uart, provide_value_message, strlen(provide_value_message) + 1, 500);
+
+                        k_sleep(K_SECONDS(59));
+		    	        k_free(provide_value_message);
+
+                        oem_info_gathering_status = 4;
+                    }
+                    break;
+                case 4:
+                    if(psr_available)
+                    {
+                        //++++++++++++++++++++++++++++++++++++++++++++++++++++
+                        // increase transaction number
+                        increase_transaction_nr();
+
+                        //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		    	        // build base64 strings from values and build send string
+		    	        provide_value_message = k_calloc(500,sizeof(char));
+                        memset(base64_string_pressure, 0x0, sizeof(char)*20);
+
+                        if (psr_available)
                         {
-		    		        bintob64(base64_string,&data.psr_val, sizeof(float));
+		    		        bintob64(base64_string_pressure,&data.psr_val, sizeof(float));
 
                             sprintf(string_unix_timestamp, "%llu" , unix_timestamp);
 
-		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string, string_unix_timestamp);
+		    		        build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string_pressure, string_unix_timestamp);
 
                             psr_available = false;
                         }
@@ -115,10 +140,10 @@ void main(void)
                         LOG_INF("%s", provide_value_message);
                         uart_tx(uart, provide_value_message, strlen(provide_value_message) + 1, 500);
 
-                        k_sleep(K_MSEC(5000));
-
-                        k_free(base64_string);
+                        k_sleep(K_SECONDS(59));
 		    	        k_free(provide_value_message);
+
+                        oem_info_gathering_status = 3;
                     }
                     break;
 

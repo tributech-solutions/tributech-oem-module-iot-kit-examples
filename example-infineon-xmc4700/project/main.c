@@ -11,7 +11,7 @@
 #include <DAVE.h>                 //Declarations from DAVE Code Generation (includes SFR declaration)
 #include <functions.h>
 #include <tributech_oem_api.h>
-#include "usb_communication.h"
+//#include "usb_communication.h"
 #include "uart_communication.h"
 #include "dps310_ctrl.h"
 #include "i2c_master_ctrl.h"
@@ -29,6 +29,31 @@
  * code.
  */
 
+void send_switched_temp_error(time_t time_command_sent, int64_t error_number)
+{
+	uint64_t send_error = 0;
+	char valuemetadataid_errorpos[37] = "25c804d8-8c26-4b20-b429-0a8fce8949dc";
+	char base64_string_error_number[20] = "";
+	char string_error_timestamp [50] = "";
+	char provide_value_message[500] = "";		// provide values output message
+
+	bintob64(&base64_string_error_number[0],&error_number, sizeof(int64_t));
+
+	do{
+		send_error = (uint64_t) get_time();
+	}while(send_error >= time_command_sent +30);
+
+	send_error = (uint64_t) get_time() * 1000000;
+	sprintf(string_error_timestamp, "%.0f", (double)send_error);
+	sprintf(provide_value_message, "{\"TransactionNr\": %d,\"Operation\": \"ProvideValue\",\"ValueMetadataId\": \"%s\",\"Timestamp\": %s,\"Value\": \"%s\"}\r\n" , 666, valuemetadataid_errorpos, string_error_timestamp, base64_string_error_number);
+
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // output via uart
+  uart_output(&UART_OEM, provide_value_message);
+
+  delay_ms(100);
+}
+
 int main(void)
 {
   DAVE_STATUS_t status;
@@ -37,7 +62,9 @@ int main(void)
   char valuemetadataid_temperature[37] = "";	// ValueMetaDataId 1
   char valuemetadataid_pressure[37] = "";		// ValueMetaDataId 2
 
-  char *base64_string;      			// pointer to base64 string
+
+  char base64_string_temperature[20] = "";      			// pointer to base64 string
+  char base64_string_pressure[20] = "";
   char * provide_value_message;		// provide values output message
   char get_config_message[50] = "";
   char get_time_message[50] = "";
@@ -45,13 +72,16 @@ int main(void)
   uint64_t oem_unix_timestamp = 0;
   uint64_t temp_received_timestamp = 0;
   char string_unix_timestamp [50] = "";
-  bool send_temperature_next = true;
+//  bool send_temperature_next = true;
   // The OEM is working with a nanosecond timestamp the variable time_t would only work for seconds
   uint64_t received_unix_timestamp;
   XMC_RTC_TIME_t received_timestamp_in_seconds;
   int oem_info_gathering_status = 0;
   uint8_t oem_connection_status = 0;
   struct tm t;
+  bool switched_temp_value = false;
+  bool switched_pres_value = false;
+  int64_t switch_error_number = 0;
 
   status = DAVE_Init();           /* Initialization of DAVE APPs  */
 
@@ -71,11 +101,11 @@ int main(void)
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // The following boolean disables the provide values function.
   // This means that the sensor values from the DPS368 are not used anymore and the user is able to send data to the OEm via the  COM port.
-  disable_provide_values = false; 		// true for linking
+  disable_provide_values = false; 		// true for a connection to the OEM via USB
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // init usb and uart interface
-  init_usb_Connection();
+//  init_usb_Connection();
   init_uart_connection();
 
   if(!disable_provide_values)
@@ -89,14 +119,14 @@ int main(void)
   	  // init dps310
   	  dps310_init();
   }
-
+  delay_ms(30000);
   while(1U)
   {
-	  if(USBD_VCOM_IsEnumDone() != 0)
-	  {
-		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
-		  // get usb input
-		  wait_for_input();
+//	  if(USBD_VCOM_IsEnumDone() != 0)
+//	  {
+//		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+//		  // get usb input
+//		  wait_for_input();
 
 		  if(!new_uart_input_message && last_command_sent + 20 < get_time() && !disable_provide_values)
 		  {
@@ -110,20 +140,19 @@ int main(void)
 		  	  		  get_config_transactionnr = 1;
 		  	  		  last_command_sent = get_time();
 		  	  		  break;
+
 		  	  	  case 1:
 		  	  		  build_get_status(get_status_message, "2");
-
 		  	  		  uart_output(&UART_OEM, get_status_message);
-
 		  	  		  last_command_sent = get_time();
 		  	  		  break;
+
 		  	  	  case 2:
 		  	  		  build_get_time(get_time_message, "3");
-
 		  	  		  uart_output(&UART_OEM, get_time_message);
-
 		  	  		  last_command_sent = get_time();
 		  	  		  break;
+
 		  	  	  case 3:
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // get temperature and pressure from dps310
@@ -140,51 +169,87 @@ int main(void)
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // build base64 strings from values and build send string
 		  	  		  provide_value_message = calloc(500,sizeof(char));
-		  	  		  base64_string = calloc(20,sizeof(char));
+		  	  		  memset(&base64_string_temperature[0], 0x0, 20);
 
-		  	  		  if (send_temperature_next)
-		  	  		  {
-		  	  			  bintob64(base64_string,&dps310_status.temp_meas, sizeof(float));
-		  	  			  //base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
+					  bintob64(&base64_string_temperature[0],&dps310_status.temp_meas, sizeof(float));
+					  if(dps310_status.temp_meas >= 40)
+					  {
+						  switched_temp_value = true;
+					  }
+					  //base64_string_temperature = base64_encode(&max31855_temp_external, sizeof(float), &base64_length);
 
-		  	  			  // The OEM works with nanosec and the RTC works with seconds
-		  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
-		  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
+					  // The OEM works with nanosec and the RTC works with seconds
+					  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
+					  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
 
-		  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string,string_unix_timestamp);
-
-		  	  			  send_temperature_next = false;
-		  	  		  }
-		  	  		  else
-		  	  		  {
-		  	  			  bintob64(base64_string,&dps310_status.pres_meas, sizeof(float));
-
-		  	  			  // The OEM works with nanosec and the RTC works with seconds
-		  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
-		  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
-
-		  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string,string_unix_timestamp);
-
-		  	  			  send_temperature_next = true;
-		  	  		  }
+					  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_temperature,base64_string_temperature,string_unix_timestamp);
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // output via usb
-		  	  		  USBD_VCOM_SendData((int8_t*) provide_value_message, strlen(provide_value_message));
-		  	  		  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
+//		  	  		  USBD_VCOM_SendData((int8_t*) provide_value_message, strlen(provide_value_message));
+//		  	  		  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // output via uart
 		  	  		  uart_output(&UART_OEM,provide_value_message);
 
 		  	  		  delay_ms(100);
-		  	  		  free(base64_string);
+//		  	  		  free(base64_string);
 		  	  		  free(provide_value_message);
 
 		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
 		  	  		  // save timestamp
 		  	  		  last_command_sent = get_time();
+		  	  		  if(switched_temp_value == true)
+		  	  		  {
+		  	  			switch_error_number = 11;
+		  	  			send_switched_temp_error(last_command_sent, switch_error_number);
+		  	  		  }
+		  	  	      oem_info_gathering_status = 4;
 		  	  		  break;
+
+		  	  	  case 4:
+
+		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		  	  		  // increase transaction number
+		  	  		  increase_transaction_nr();
+
+		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		  	  		  // build base64 strings from values and build send string
+		  	  		  provide_value_message = calloc(500,sizeof(char));
+		  	  		  memset(&base64_string_pressure[0], 0x0, 20);
+
+	  	  			  bintob64(&base64_string_pressure[0],&dps310_status.pres_meas, sizeof(float));
+	  	  			  if(dps310_status.pres_meas <= 40)
+	  	  			  {
+	  	  				  switched_pres_value = true;
+	  	  			  }
+
+	  	  			  // The OEM works with nanosec and the RTC works with seconds
+	  	  			  oem_unix_timestamp = (uint64_t) get_time() * 1000000;
+	  	  			  sprintf(string_unix_timestamp, "%.0f", (double)oem_unix_timestamp);
+
+	  	  			  build_provide_value(provide_value_message,transaction_nr_string,valuemetadataid_pressure,base64_string_pressure,string_unix_timestamp);
+
+		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		  	  		  // output via uart
+		  	  		  uart_output(&UART_OEM,provide_value_message);
+
+		  	  		  delay_ms(100);
+//		  	  		  free(base64_string);
+		  	  		  free(provide_value_message);
+
+		  	  		  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+		  	  		  // save timestamp
+		  	  		  last_command_sent = get_time();
+		  	  		  if(switched_pres_value == true)
+		  	  		  {
+		  	  			switch_error_number = -11;
+		  	  			send_switched_temp_error(last_command_sent, switch_error_number);
+		  	  		  }
+	  	  			  oem_info_gathering_status = 3;
+		  	  		  break;
+
 		  	  	  default:
 		  	  		  break;
 			  }
@@ -192,10 +257,10 @@ int main(void)
 		  }
 		  else if (new_uart_input_message && !disable_provide_values )
 		  {
-			  //++++++++++++++++++++++++++++++++++++++++++++++++++++
-			  // output on usb
-			  USBD_VCOM_SendData((int8_t*) uart_buffer, strlen(uart_buffer));
-			  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
+//			  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+//			  // output on usb
+//			  USBD_VCOM_SendData((int8_t*) uart_buffer, strlen(uart_buffer));
+//			  CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 
 			  switch(oem_info_gathering_status)
 			  {
@@ -252,6 +317,6 @@ int main(void)
 			  memset(uart_buffer,0x0,UART_RECEIVE_BUFFER_SIZE);
 			  uart_read_index = 0;
 		  }
-	  }
+//	  }
   }
 }
