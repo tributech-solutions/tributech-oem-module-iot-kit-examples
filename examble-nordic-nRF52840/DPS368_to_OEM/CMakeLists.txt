@@ -14,10 +14,6 @@ target_sources(app PRIVATE src/UartCommunication/uart_communication.c)
 zephyr_include_directories(src/Scheduling)
 target_sources(app PRIVATE src/Scheduling/scheduling.c)
 
-# include dps368
-zephyr_include_directories(src/DPS368)
-target_sources(app PRIVATE src/DPS368/dps368.c)
-
 #include Tributech lib
 zephyr_include_directories(src/TributechLib)
 target_sources(app PRIVATE src/TributechLib/tributech_oem_api.c)

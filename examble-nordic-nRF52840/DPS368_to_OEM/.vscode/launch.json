@@ -12,6 +12,13 @@
             "type": "cortex-debug",
             "runToEntryPoint": "main",
             "servertype": "jlink"
+        },
+        {
+            "type": "nrf-connect",
+            "request": "launch",
+            "name": "Launch DPS368_to_OEM\\build_nrf52840dk_nrf52840",
+            "config": "c:/tributech-oem-module-iot-kit-examples/examble-nordic-nRF52840/DPS368_to_OEM/build_nrf52840dk_nrf52840",
+            "runToEntryPoint": "main"
         }
     ]
 }
